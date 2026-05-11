@@ -596,7 +596,15 @@ def spawn_teammate_thread(name: str, role: str, prompt: str) -> str:
 
 
 def _teammate_submit_plan(from_name: str, plan: str) -> str:
-    """Teammate submits a plan to Lead for approval."""
+    """Teammate submits a plan to Lead for approval.
+
+    Note: This is a protocol-level request, not a code-level gate.
+    After submitting, the teammate's thread continues running — it can
+    still call bash/write/etc. Real enforcement relies on the model
+    waiting for the approval response before acting. Code-level tool
+    gating would require blocking the teammate's tool dispatch until
+    approval arrives.
+    """
     req_id = new_request_id()
     pending_requests[req_id] = ProtocolState(
         request_id=req_id, type="plan_approval",

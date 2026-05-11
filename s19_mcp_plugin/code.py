@@ -110,8 +110,13 @@ def claim_task(task_id: str, owner: str = "agent") -> str:
     if task.owner:
         return f"Task {task_id} already owned by {task.owner}"
     if not can_start(task_id):
-        deps = [d for d in task.blockedBy if load_task(d).status != "completed"]
-        return f"Blocked by: {deps}"
+        deps = [d for d in task.blockedBy
+                if _task_path(d).exists() and load_task(d).status != "completed"]
+        missing = [d for d in task.blockedBy if not _task_path(d).exists()]
+        parts = []
+        if deps: parts.append(f"blocked by: {deps}")
+        if missing: parts.append(f"missing deps: {missing}")
+        return "Cannot start — " + ", ".join(parts)
     task.owner = owner
     task.status = "in_progress"
     save_task(task)
@@ -353,6 +358,10 @@ def new_request_id() -> str:
 def match_response(response_type: str, request_id: str, approve: bool):
     state = pending_requests.get(request_id)
     if not state:
+        return
+    if state.type == "shutdown" and response_type != "shutdown_response":
+        return
+    if state.type == "plan_approval" and response_type != "plan_approval_response":
         return
     state.status = "approved" if approve else "rejected"
 

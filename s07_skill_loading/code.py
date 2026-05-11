@@ -160,12 +160,20 @@ def run_edit(path: str, old_text: str, new_text: str) -> str:
 def run_glob(pattern: str) -> str:
     import glob as g
     try:
-        results = g.glob(pattern, root_dir=WORKDIR)
+        results = []
+        for match in g.glob(pattern, root_dir=WORKDIR):
+            if (WORKDIR / match).resolve().is_relative_to(WORKDIR):
+                results.append(match)
         return "\n".join(results) if results else "(no matches)"
     except Exception as e:
         return f"Error: {e}"
 
 def run_todo_write(todos: list) -> str:
+    for i, t in enumerate(todos):
+        if "content" not in t or "status" not in t:
+            return f"Error: todos[{i}] missing 'content' or 'status'"
+        if t["status"] not in ("pending", "in_progress", "completed"):
+            return f"Error: todos[{i}] has invalid status '{t['status']}'"
     tasks_file = TASKS_DIR / "current_todos.json"
     tasks_file.write_text(json.dumps(todos, indent=2, ensure_ascii=False))
     lines = ["\n\033[33m## Current Tasks\033[0m"]

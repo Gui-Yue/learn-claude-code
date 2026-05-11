@@ -394,7 +394,10 @@ def run_edit(path: str, old_text: str, new_text: str) -> str:
 def run_glob(pattern: str) -> str:
     import glob as g
     try:
-        results = g.glob(pattern, root_dir=WORKDIR)
+        results = []
+        for match in g.glob(pattern, root_dir=WORKDIR):
+            if (WORKDIR / match).resolve().is_relative_to(WORKDIR):
+                results.append(match)
         return "\n".join(results) if results else "(no matches)"
     except Exception as e: return f"Error: {e}"
 
@@ -554,6 +557,10 @@ def agent_loop(messages: list):
         if memories_content:
             system += "\n\n" + memories_content
 
+        # s09: save pre-compression snapshot for accurate memory extraction
+        pre_compress = [m if isinstance(m, dict) else {"role": m.get("role",""),
+            "content": str(m.get("content",""))} for m in messages]
+
         # s08: compression pipeline (budget → snip → micro)
         messages[:] = tool_result_budget(messages)
         messages[:] = snip_compact(messages)
@@ -578,8 +585,8 @@ def agent_loop(messages: list):
 
         messages.append({"role": "assistant", "content": response.content})
         if response.stop_reason != "tool_use":
-            # s09: extract memories after each turn ends (before messages get compacted)
-            extract_memories(messages)
+            # s09: extract from pre-compression snapshot for full fidelity
+            extract_memories(pre_compress)
             consolidate_memories()
             return
 

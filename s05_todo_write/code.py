@@ -108,7 +108,10 @@ def run_edit(path: str, old_text: str, new_text: str) -> str:
 def run_glob(pattern: str) -> str:
     import glob as g
     try:
-        results = g.glob(pattern, root_dir=WORKDIR)
+        results = []
+        for match in g.glob(pattern, root_dir=WORKDIR):
+            if (WORKDIR / match).resolve().is_relative_to(WORKDIR):
+                results.append(match)
         return "\n".join(results) if results else "(no matches)"
     except Exception as e:
         return f"Error: {e}"
