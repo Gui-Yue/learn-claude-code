@@ -18,7 +18,7 @@ s16's teammates can communicate and handshake shutdown. But each teammate waits 
 
 ## The Solution
 
-![Autonomous Agents Overview](images/autonomous-agents-overview.svg)
+![Autonomous Agents Overview](images/autonomous-agents-overview.en.svg)
 
 Carries forward S16's teaching-version MessageBus and protocol tools. This chapter adds: **idle_poll** (poll every 5 seconds when idle), **scan_unclaimed_tasks** (scan the board for claimable tasks), **auto-claim** (claim on sight, no Lead needed).
 

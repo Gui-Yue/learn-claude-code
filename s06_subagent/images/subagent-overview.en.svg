@@ -46,21 +46,25 @@
   <text x="264" y="152" fill="#64748b" font-size="8">tool_use</text>
 
   <!-- TOOL_HANDLERS -->
-  <rect x="170" y="158" width="160" height="28" rx="6" fill="#e0e7ff" stroke="#2563eb" stroke-width="1"/>
-  <text x="250" y="176" fill="#1e3a5f" font-size="10" font-weight="600" text-anchor="middle">TOOL_HANDLERS</text>
-
-  <!-- task → spawn -->
-  <rect x="190" y="194" width="120" height="26" rx="4" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
-  <text x="250" y="211" fill="#5b21b6" font-size="10" font-weight="600" text-anchor="middle">task → spawn</text>
+  <rect x="50" y="158" width="280" height="74" rx="6" fill="#e0e7ff" stroke="#2563eb" stroke-width="1"/>
+  <text x="190" y="176" fill="#1e3a5f" font-size="10" font-weight="600" text-anchor="middle">TOOL_HANDLERS</text>
 
   <!-- Other tools (gray) -->
-  <rect x="50" y="194" width="120" height="34" rx="4" fill="#f0f4ff" stroke="#2563eb" stroke-width="1"/>
-  <text x="110" y="211" fill="#1e3a5f" font-size="10" font-weight="600" text-anchor="middle">Base Tools</text>
-  <text x="110" y="224" fill="#64748b" font-size="8" text-anchor="middle">bash / read / write / ...</text>
+  <rect x="65" y="190" width="115" height="32" rx="4" fill="#f0f4ff" stroke="#2563eb" stroke-width="1"/>
+  <text x="122" y="206" fill="#1e3a5f" font-size="10" font-weight="600" text-anchor="middle">Base Tools</text>
+  <text x="122" y="219" fill="#64748b" font-size="8" text-anchor="middle">bash / read / write / ...</text>
 
-  <!-- Parent internal loop -->
-  <path d="M 330 172 L 340 172 Q 348 172 348 180 L 348 240 Q 348 248 340 248 L 44 248 Q 36 248 36 240 L 36 118 Q 36 110 44 110 L 50 110" fill="none" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)" stroke-dasharray="4,3"/>
-  <text x="210" y="256" fill="#94a3b8" font-size="8" text-anchor="middle">Normal tool results → messages[]</text>
+  <!-- task → spawn -->
+  <rect x="200" y="193" width="110" height="26" rx="4" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="255" y="210" fill="#5b21b6" font-size="10" font-weight="600" text-anchor="middle">task → spawn</text>
+
+  <!-- Parent tool_result target -->
+  <rect x="190" y="270" width="120" height="34" rx="5" fill="#dcfce7" stroke="#16a34a" stroke-width="1.2"/>
+  <text x="250" y="291" fill="#166534" font-size="9" font-weight="700" text-anchor="middle">tool_result</text>
+  <path d="M 250 232 L 250 270" fill="none" stroke="#16a34a" stroke-width="1.4" marker-end="url(#arrow-green)"/>
+  <path d="M 190 287 L 42 287 L 42 118 L 50 118" fill="none" stroke="#16a34a" stroke-width="1.2" marker-end="url(#arrow-green)" stroke-dasharray="4,3"/>
+  <text x="110" y="304" fill="#94a3b8" font-size="8" text-anchor="middle">append messages[]</text>
+  <text x="210" y="256" fill="#94a3b8" font-size="8" text-anchor="middle">Normal tool results also append to messages[]</text>
 
   <!-- ===== Subagent (right) ===== -->
   <rect x="430" y="68" width="340" height="268" rx="12" fill="#faf5ff" stroke="#7c3aed" stroke-width="2"/>
@@ -94,14 +98,14 @@
   <text x="605" y="290" fill="#166534" font-size="10" font-weight="600" text-anchor="middle">✓ Extract only final text → return to Parent</text>
 
   <!-- ===== dispatch line: Parent → Subagent (top) ===== -->
-  <path d="M 310 207 L 362 207 Q 370 207 370 199 L 370 126 Q 370 118 378 118 L 450 118" fill="none" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#arrow-purple)"/>
-  <rect x="354" y="152" width="56" height="20" rx="4" fill="#faf5ff" stroke="#7c3aed" stroke-width="1"/>
-  <text x="382" y="166" fill="#7c3aed" font-size="9" font-weight="700" text-anchor="middle">① dispatch</text>
+  <path d="M 310 206 L 362 206 Q 370 206 370 198 L 370 126 Q 370 118 378 118 L 450 118" fill="none" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#arrow-purple)"/>
+  <rect x="342" y="152" width="80" height="20" rx="4" fill="#faf5ff" stroke="#7c3aed" stroke-width="1"/>
+  <text x="382" y="166" fill="#7c3aed" font-size="9" font-weight="700" text-anchor="middle">① task desc</text>
 
-  <!-- ===== return line: Subagent → Parent (bottom) ===== -->
-  <path d="M 450 286 L 400 286 Q 392 286 392 294 L 392 302 Q 392 310 384 310 L 50 310 Q 42 310 42 302 L 42 134 Q 42 126 50 126" fill="none" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arrow-green)"/>
-  <rect x="356" y="320" width="72" height="20" rx="4" fill="#dcfce7" stroke="#16a34a" stroke-width="1"/>
-  <text x="392" y="334" fill="#166534" font-size="9" font-weight="700" text-anchor="middle">② return summary</text>
+  <!-- ===== return line: Subagent → Parent tool_result ===== -->
+  <path d="M 460 286 L 310 286" fill="none" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arrow-green)"/>
+  <rect x="350" y="268" width="70" height="20" rx="4" fill="#dcfce7" stroke="#16a34a" stroke-width="1"/>
+  <text x="385" y="282" fill="#166534" font-size="9" font-weight="700" text-anchor="middle">② summary</text>
 
   <!-- ===== Legend ===== -->
   <rect x="60" y="370" width="680" height="56" rx="8" fill="#f1f5f9"/>

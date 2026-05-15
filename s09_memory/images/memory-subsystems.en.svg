@@ -24,7 +24,7 @@
 
   <!-- Loading -->
   <rect x="222" y="58" width="200" height="80" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
-  <text x="322" y="80" fill="#5b21b6" font-size="13" font-weight="700" text-anchor="middle">Loading</text>
+  <text x="322" y="80" fill="#5b21b6" font-size="13" font-weight="700" text-anchor="middle">Load</text>
   <line x1="237" y1="90" x2="407" y2="90" stroke="#c4b5fd" stroke-width="0.5"/>
   <text x="237" y="108" fill="#5b21b6" font-size="10">Index in SYSTEM (always)</text>
   <text x="237" y="124" fill="#5b21b6" font-size="10">LLM side-query select files</text>
@@ -34,7 +34,7 @@
 
   <!-- Extraction -->
   <rect x="457" y="58" width="130" height="80" rx="8" fill="#f3e8ff" stroke="#7c3aed" stroke-width="2"/>
-  <text x="522" y="80" fill="#5b21b6" font-size="13" font-weight="700" text-anchor="middle">Extraction</text>
+  <text x="522" y="80" fill="#5b21b6" font-size="13" font-weight="700" text-anchor="middle">Extract</text>
   <line x1="472" y1="90" x2="572" y2="90" stroke="#c4b5fd" stroke-width="0.5"/>
   <text x="472" y="108" fill="#5b21b6" font-size="10">After each turn ends</text>
   <text x="472" y="124" fill="#5b21b6" font-size="10">LLM extracts prefs/constraints</text>

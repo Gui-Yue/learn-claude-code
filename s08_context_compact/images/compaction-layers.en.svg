@@ -39,37 +39,37 @@
 
   <!-- ===== Pre-processing pipeline title ===== -->
   <rect x="20" y="146" width="720" height="24" rx="4" fill="#f1f5f9"/>
-  <text x="55" y="163" fill="#64748b" font-size="11" font-weight="600">Pre-processing Pipeline (runs before every LLM call, 0 API calls)</text>
-
-  <!-- L1: snipCompact -->
-  <rect x="80" y="180" width="600" height="46" rx="7" fill="url(#pre)" stroke="#2563eb" stroke-width="1.5"/>
-  <text x="100" y="200" fill="#1e40af" font-size="12" font-weight="600">L1</text>
-  <text x="135" y="200" fill="#1e40af" font-size="13" font-weight="700">snipCompact</text>
-  <text x="260" y="200" fill="#1e40af" font-size="11">messages &gt; 50 → keep first 3 + last 47, trim middle</text>
-  <text x="590" y="200" fill="#1e40af" font-size="10" text-anchor="end">Drop messages</text>
-  <text x="135" y="218" fill="#2563eb" font-size="9">Trigger: message count exceeds threshold</text>
-
-  <!-- Arrow L1→L2 -->
-  <line x1="380" y1="226" x2="380" y2="238" stroke="#94a3b8" stroke-width="1" marker-end="url(#arrow-d)"/>
-
-  <!-- L2: microCompact -->
-  <rect x="80" y="240" width="600" height="46" rx="7" fill="url(#pre)" stroke="#2563eb" stroke-width="1.5"/>
-  <text x="100" y="260" fill="#1e40af" font-size="12" font-weight="600">L2</text>
-  <text x="135" y="260" fill="#1e40af" font-size="13" font-weight="700">microCompact</text>
-  <text x="260" y="260" fill="#1e40af" font-size="11">Old tool_result → clear API cache_edits (keep latest 3)</text>
-  <text x="590" y="260" fill="#1e40af" font-size="10" text-anchor="end">Clear old results</text>
-  <text x="135" y="278" fill="#2563eb" font-size="9">Trigger: every turn automatically; tutorial uses text placeholder</text>
-
-  <!-- Arrow L2→L3 -->
-  <line x1="380" y1="286" x2="380" y2="298" stroke="#94a3b8" stroke-width="1" marker-end="url(#arrow-d)"/>
+  <text x="55" y="163" fill="#64748b" font-size="11" font-weight="600">Pre-processing Pipeline (execution order: L3 → L1 → L2, before every LLM call, 0 API)</text>
 
   <!-- L3: toolResultBudget -->
+  <rect x="80" y="180" width="600" height="46" rx="7" fill="url(#pre)" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="100" y="200" fill="#1e40af" font-size="12" font-weight="600">L3</text>
+  <text x="135" y="200" fill="#1e40af" font-size="13" font-weight="700">toolResultBudget</text>
+  <text x="260" y="200" fill="#1e40af" font-size="11">tool_result total &gt; 200KB → spill largest item</text>
+  <text x="650" y="200" fill="#1e40af" font-size="10" text-anchor="end">keep full content</text>
+  <text x="135" y="218" fill="#2563eb" font-size="9">Trigger: every turn, before microCompact can replace full content</text>
+
+  <!-- Arrow L3→L1 -->
+  <line x1="380" y1="226" x2="380" y2="238" stroke="#94a3b8" stroke-width="1" marker-end="url(#arrow-d)"/>
+
+  <!-- L1: snipCompact -->
+  <rect x="80" y="240" width="600" height="46" rx="7" fill="url(#pre)" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="100" y="260" fill="#1e40af" font-size="12" font-weight="600">L1</text>
+  <text x="135" y="260" fill="#1e40af" font-size="13" font-weight="700">snipCompact</text>
+  <text x="260" y="260" fill="#1e40af" font-size="11">messages &gt; 50 → trim middle</text>
+  <text x="650" y="260" fill="#1e40af" font-size="10" text-anchor="end">keep head/tail</text>
+  <text x="135" y="278" fill="#2563eb" font-size="9">Trigger: message count exceeds threshold</text>
+
+  <!-- Arrow L1→L2 -->
+  <line x1="380" y1="286" x2="380" y2="298" stroke="#94a3b8" stroke-width="1" marker-end="url(#arrow-d)"/>
+
+  <!-- L2: microCompact -->
   <rect x="80" y="300" width="600" height="46" rx="7" fill="url(#pre)" stroke="#2563eb" stroke-width="1.5"/>
-  <text x="100" y="320" fill="#1e40af" font-size="12" font-weight="600">L3</text>
-  <text x="135" y="320" fill="#1e40af" font-size="13" font-weight="700">toolResultBudget</text>
-  <text x="272" y="320" fill="#1e40af" font-size="11">Single user message tool_result total &gt; 200KB → spill largest to disk</text>
-  <text x="590" y="320" fill="#1e40af" font-size="10" text-anchor="end">Spill large results</text>
-  <text x="135" y="338" fill="#2563eb" font-size="9">Trigger: auto-check after every tool execution</text>
+  <text x="100" y="320" fill="#1e40af" font-size="12" font-weight="600">L2</text>
+  <text x="135" y="320" fill="#1e40af" font-size="13" font-weight="700">microCompact</text>
+  <text x="260" y="320" fill="#1e40af" font-size="11">old tool_result → placeholder (keep latest 3)</text>
+  <text x="650" y="320" fill="#1e40af" font-size="10" text-anchor="end">compact old</text>
+  <text x="135" y="338" fill="#2563eb" font-size="9">Trigger: every turn automatically; tutorial uses text placeholder</text>
 
   <!-- ===== Auto-compact title ===== -->
   <rect x="20" y="358" width="720" height="24" rx="4" fill="#f1f5f9"/>
@@ -79,8 +79,8 @@
   <rect x="80" y="390" width="600" height="58" rx="7" fill="url(#auto)" stroke="#dc2626" stroke-width="2"/>
   <text x="100" y="412" fill="#991b1b" font-size="12" font-weight="600">L4</text>
   <text x="135" y="412" fill="#991b1b" font-size="13" font-weight="700">autoCompact</text>
-  <text x="260" y="412" fill="#991b1b" font-size="11">tokens over threshold → LLM full summary</text>
-  <text x="590" y="412" fill="#991b1b" font-size="10" text-anchor="end">1 API call</text>
+  <text x="260" y="412" fill="#991b1b" font-size="11">tokens over threshold → LLM summary</text>
+  <text x="650" y="412" fill="#991b1b" font-size="10" text-anchor="end">1 API call</text>
   <text x="135" y="428" fill="#dc2626" font-size="9">Threshold: contextWindow - maxOutputTokens - 13,000 · Try sessionMemoryCompact first, then LLM</text>
   <text x="135" y="442" fill="#dc2626" font-size="9">Circuit breaker: stop retrying after 3 consecutive failures</text>
 
@@ -92,8 +92,8 @@
   <rect x="80" y="492" width="600" height="46" rx="7" fill="url(#emergency)" stroke="#c2410c" stroke-width="1.5"/>
   <text x="100" y="512" fill="#9a3412" font-size="12" font-weight="600">Emrg</text>
   <text x="135" y="512" fill="#9a3412" font-size="13" font-weight="700">reactiveCompact</text>
-  <text x="278" y="512" fill="#9a3412" font-size="11">API returns 413 → byte-level trim, keep last 5 + summary</text>
-  <text x="590" y="512" fill="#9a3412" font-size="10" text-anchor="end">More aggressive than autoCompact</text>
+  <text x="278" y="512" fill="#9a3412" font-size="11">API 413 → byte-level trim, keep last 5 + summary</text>
+  <text x="650" y="512" fill="#9a3412" font-size="10" text-anchor="end">more aggressive</text>
   <text x="135" y="530" fill="#c2410c" font-size="9">Trigger: API returns prompt_too_long or 413 error</text>
 
 </svg>

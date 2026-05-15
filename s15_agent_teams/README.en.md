@@ -19,7 +19,7 @@ s06's sub-agents are temps, called in for one job, then gone. Some tasks need te
 
 ## The Solution
 
-![Agent Teams Overview](images/agent-teams-overview.svg)
+![Agent Teams Overview](images/agent-teams-overview.en.svg)
 
 Teaching code carries forward S14's capabilities (prompt assembly, task system, background execution, cron scheduling). To stay focused on the team mechanism, it omits full error recovery, memory, and skill systems. Added: **MessageBus** (file-based inboxes), **spawn_teammate_thread** (launch teammate threads), **inbox injection** (Lead receives teammate messages and injects into history).
 
@@ -36,7 +36,7 @@ Sub-agent vs Teammate:
 
 ## How It Works
 
-![Team Topology](images/team-topology.svg)
+![Team Topology](images/team-topology.en.svg)
 
 ### MessageBus: File-Based Inboxes
 

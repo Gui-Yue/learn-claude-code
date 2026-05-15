@@ -170,6 +170,8 @@ The teaching version's separation is clearer for teaching — readers immediatel
 
 ### 2. Concurrency Safety: isConcurrencySafe()
 
+![Tool Concurrency](images/concurrency-comparison.en.svg)
+
 The teaching version executes tools one by one in original order, without concurrency. CC uses `isConcurrencySafe(input)` to determine concurrency — note this isn't simply "read-only vs write", but judges by specific input:
 
 | | isReadOnly | isConcurrencySafe |

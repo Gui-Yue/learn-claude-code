@@ -19,7 +19,7 @@ s06 のサブ Agent は臨時スタッフ、一つの仕事を終えたら去る
 
 ## ソリューション
 
-![Agent Teams Overview](images/agent-teams-overview.svg)
+![Agent Teams Overview](images/agent-teams-overview.ja.svg)
 
 教学版は S14 の能力（プロンプト組み立て、タスクシステム、バックグラウンド実行、cron スケジューリング）を踏襲。チーム機構に集中するため、完全なエラーリカバリ、メモリ、スキルシステムは省略。追加：**MessageBus**（ファイル受信箱）、**spawn_teammate_thread**（チームメイトスレッド起動）、**inbox 注入**（Lead がチームメイトメッセージを受信し history に注入）。
 
@@ -36,7 +36,7 @@ s06 のサブ Agent は臨時スタッフ、一つの仕事を終えたら去る
 
 ## 仕組み
 
-![Team Topology](images/team-topology.svg)
+![Team Topology](images/team-topology.ja.svg)
 
 ### MessageBus: ファイル受信箱
 

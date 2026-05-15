@@ -19,7 +19,7 @@ s13 lets the agent run slow operations in the background, but every operation is
 
 ## The Solution
 
-![Cron Scheduler Overview](images/cron-scheduler-overview.svg)
+![Cron Scheduler Overview](images/cron-scheduler-overview.en.svg)
 
 Teaching code carries forward S13's simplified task system, background execution, and prompt assembly; to stay focused on the scheduler, it omits full error recovery, memory, and skill systems. Added: an independent cron scheduler thread running as a daemon, polling every second, queuing matching jobs into `cron_queue`.
 

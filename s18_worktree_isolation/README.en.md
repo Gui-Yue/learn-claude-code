@@ -22,7 +22,7 @@ s15-s17 solved "who does what" (task system) and "how to communicate" (message b
 
 ## The Solution
 
-![Worktree Overview](images/worktree-overview.svg)
+![Worktree Overview](images/worktree-overview.en.svg)
 
 Git worktree lets you create multiple independent working directories in the same repo, each with its own branch. Alice works in `.worktrees/auth-refactor/`, Bob in `.worktrees/ui-login/` — no conflicts.
 

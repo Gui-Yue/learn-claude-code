@@ -48,13 +48,14 @@
 
   <line x1="361" y1="110" x2="375" y2="110" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-  <rect x="378" y="80" width="356" height="60" rx="8" fill="#f0f4ff" stroke="#2563eb" stroke-width="1.5"/>
-  <text x="556" y="98" fill="#1e3a5f" font-size="10" font-weight="600" text-anchor="middle">TOOL DISPATCH（s17 + s18）</text>
-  <text x="394" y="114" fill="#2563eb" font-size="8">bash · read · write · task(4) · send · inbox</text>
-  <text x="394" y="128" fill="#7c3aed" font-size="8" font-weight="700">★ request_shutdown · request_plan · review_plan</text>
+  <rect x="378" y="76" width="356" height="70" rx="8" fill="#f0f4ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="556" y="94" fill="#1e3a5f" font-size="10" font-weight="600" text-anchor="middle">TOOL DISPATCH（s17 + s18）</text>
+  <text x="394" y="110" fill="#2563eb" font-size="8">bash · read · write · task(4) · send · inbox</text>
+  <text x="394" y="123" fill="#7c3aed" font-size="8" font-weight="700">request_shutdown · request_plan · review_plan</text>
+  <text x="394" y="136" fill="#b45309" font-size="8" font-weight="700">★ create_worktree · remove_worktree · keep_worktree</text>
 
   <!-- Loop back -->
-  <path d="M 734 110 L 748 110 L 748 150 L 55 150 L 55 130" fill="none" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)" stroke-dasharray="6,3"/>
+  <path d="M 734 110 L 748 110 L 748 150 L 55 150 L 55 130" fill="none" stroke="#94a3b8" stroke-width="1" marker-end="url(#arrow)" stroke-dasharray="5,4"/>
 
   <!-- ===== Row 2: Worktree Topology ===== -->
   <rect x="30" y="172" width="700" height="215" rx="8" fill="#fffbeb" stroke="#b45309" stroke-width="2"/>

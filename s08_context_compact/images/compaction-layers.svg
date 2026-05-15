@@ -39,37 +39,37 @@
 
   <!-- ===== 预处理管线标题 ===== -->
   <rect x="20" y="146" width="720" height="24" rx="4" fill="#f1f5f9"/>
-  <text x="55" y="163" fill="#64748b" font-size="11" font-weight="600">预处理管线（每轮 LLM 调用前自动执行，0 API 调用）</text>
-
-  <!-- L1: snipCompact -->
-  <rect x="80" y="180" width="600" height="46" rx="7" fill="url(#pre)" stroke="#2563eb" stroke-width="1.5"/>
-  <text x="100" y="200" fill="#1e40af" font-size="12" font-weight="600">L1</text>
-  <text x="135" y="200" fill="#1e40af" font-size="13" font-weight="700">snipCompact</text>
-  <text x="260" y="200" fill="#1e40af" font-size="11">消息 &gt; 50 条 → 保留头 3 + 尾 47，裁中间</text>
-  <text x="590" y="200" fill="#1e40af" font-size="10" text-anchor="end">删除消息</text>
-  <text x="135" y="218" fill="#2563eb" font-size="9">触发：消息数超过阈值</text>
-
-  <!-- 箭头 L1→L2 -->
-  <line x1="380" y1="226" x2="380" y2="238" stroke="#94a3b8" stroke-width="1" marker-end="url(#arrow-d)"/>
-
-  <!-- L2: microCompact -->
-  <rect x="80" y="240" width="600" height="46" rx="7" fill="url(#pre)" stroke="#2563eb" stroke-width="1.5"/>
-  <text x="100" y="260" fill="#1e40af" font-size="12" font-weight="600">L2</text>
-  <text x="135" y="260" fill="#1e40af" font-size="13" font-weight="700">microCompact</text>
-  <text x="260" y="260" fill="#1e40af" font-size="11">旧 tool_result → API cache_edits 清除（保留最近 3 条）</text>
-  <text x="590" y="260" fill="#1e40af" font-size="10" text-anchor="end">清除旧结果</text>
-  <text x="135" y="278" fill="#2563eb" font-size="9">触发：每轮自动，教学版用文本占位符模拟</text>
-
-  <!-- 箭头 L2→L3 -->
-  <line x1="380" y1="286" x2="380" y2="298" stroke="#94a3b8" stroke-width="1" marker-end="url(#arrow-d)"/>
+  <text x="55" y="163" fill="#64748b" font-size="11" font-weight="600">预处理管线（执行顺序：L3 → L1 → L2，每轮 LLM 调用前自动执行，0 API）</text>
 
   <!-- L3: toolResultBudget -->
+  <rect x="80" y="180" width="600" height="46" rx="7" fill="url(#pre)" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="100" y="200" fill="#1e40af" font-size="12" font-weight="600">L3</text>
+  <text x="135" y="200" fill="#1e40af" font-size="13" font-weight="700">toolResultBudget</text>
+  <text x="260" y="200" fill="#1e40af" font-size="11">tool_result 总和 &gt; 200KB → 最大项落盘</text>
+  <text x="650" y="200" fill="#1e40af" font-size="10" text-anchor="end">保留完整内容</text>
+  <text x="135" y="218" fill="#2563eb" font-size="9">触发：每轮自动，必须在 microCompact 之前保留完整内容</text>
+
+  <!-- 箭头 L3→L1 -->
+  <line x1="380" y1="226" x2="380" y2="238" stroke="#94a3b8" stroke-width="1" marker-end="url(#arrow-d)"/>
+
+  <!-- L1: snipCompact -->
+  <rect x="80" y="240" width="600" height="46" rx="7" fill="url(#pre)" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="100" y="260" fill="#1e40af" font-size="12" font-weight="600">L1</text>
+  <text x="135" y="260" fill="#1e40af" font-size="13" font-weight="700">snipCompact</text>
+  <text x="260" y="260" fill="#1e40af" font-size="11">消息 &gt; 50 条 → 裁掉中间</text>
+  <text x="650" y="260" fill="#1e40af" font-size="10" text-anchor="end">保留头尾</text>
+  <text x="135" y="278" fill="#2563eb" font-size="9">触发：消息数超过阈值</text>
+
+  <!-- 箭头 L1→L2 -->
+  <line x1="380" y1="286" x2="380" y2="298" stroke="#94a3b8" stroke-width="1" marker-end="url(#arrow-d)"/>
+
+  <!-- L2: microCompact -->
   <rect x="80" y="300" width="600" height="46" rx="7" fill="url(#pre)" stroke="#2563eb" stroke-width="1.5"/>
-  <text x="100" y="320" fill="#1e40af" font-size="12" font-weight="600">L3</text>
-  <text x="135" y="320" fill="#1e40af" font-size="13" font-weight="700">toolResultBudget</text>
-  <text x="272" y="320" fill="#1e40af" font-size="11">单 user 消息 tool_result 总和 &gt; 200KB → 落盘最大的</text>
-  <text x="590" y="320" fill="#1e40af" font-size="10" text-anchor="end">大结果落盘</text>
-  <text x="135" y="338" fill="#2563eb" font-size="9">触发：每轮工具执行后自动检查</text>
+  <text x="100" y="320" fill="#1e40af" font-size="12" font-weight="600">L2</text>
+  <text x="135" y="320" fill="#1e40af" font-size="13" font-weight="700">microCompact</text>
+  <text x="260" y="320" fill="#1e40af" font-size="11">旧 tool_result → 占位符（保留最近 3 条）</text>
+  <text x="650" y="320" fill="#1e40af" font-size="10" text-anchor="end">压旧结果</text>
+  <text x="135" y="338" fill="#2563eb" font-size="9">触发：每轮自动，教学版用文本占位符模拟</text>
 
   <!-- ===== 自动压缩标题 ===== -->
   <rect x="20" y="358" width="720" height="24" rx="4" fill="#f1f5f9"/>

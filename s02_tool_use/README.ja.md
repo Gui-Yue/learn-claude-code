@@ -170,6 +170,8 @@ Agent は 5 つの専用ツールを持つようになった。file tools は `s
 
 ### 二、並列安全性：isConcurrencySafe()
 
+![Tool Concurrency](images/concurrency-comparison.ja.svg)
+
 教育版は元の順序で一つずつ実行し、並列処理は行わない。CC は `isConcurrencySafe(input)` で並列可否を判断する — これは単なる「読み取り専用 vs 書き込み」ではなく、具体的な入力で判断する：
 
 | | isReadOnly | isConcurrencySafe |

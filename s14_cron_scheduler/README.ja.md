@@ -19,7 +19,7 @@ s13 で Agent は遅い操作をバックグラウンドで実行できるよう
 
 ## ソリューション
 
-![Cron Scheduler Overview](images/cron-scheduler-overview.svg)
+![Cron Scheduler Overview](images/cron-scheduler-overview.ja.svg)
 
 教学版は S13 の簡易タスクシステム、バックグラウンド実行、プロンプト組み立てを踏襲。スケジューラに集中するため、完全なエラーリカバリ、メモリ、スキルシステムは省略。追加：独立した cron スケジューラスレッド、daemon スレッドで動作、1 秒ごとにポーリング、時間が来たらタスクを `cron_queue` に投入。
 

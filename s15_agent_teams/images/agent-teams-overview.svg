@@ -31,6 +31,8 @@
   <text x="178" y="66" fill="#0891b2" font-size="10" font-weight="600">s15 新增</text>
   <rect x="270" y="56" width="12" height="10" rx="2" fill="#f0fdf4" stroke="#16a34a" stroke-width="1"/>
   <text x="288" y="66" fill="#16a34a" font-size="10" font-weight="600">Teammate</text>
+  <rect x="390" y="56" width="12" height="10" rx="2" fill="#fffbeb" stroke="#d97706" stroke-width="1"/>
+  <text x="408" y="66" fill="#d97706" font-size="10" font-weight="600">真实 CC 补充</text>
 
   <!-- ===== Row 1: Lead Agent Loop ===== -->
   <!-- Boxes at y=90..130 (h=40), prompt/LLM at y=86..134 (h=48), TOOLS at y=80..140 (h=60) -->
@@ -108,22 +110,19 @@
   <text x="495" y="284" fill="#16a34a" font-size="8">不能 spawn 其他 teammate</text>
   <text x="495" y="298" fill="#6b7280" font-size="8">spawn → work → summary</text>
 
-  <!-- ===== Row 4: Permission bubbling ===== -->
-  <!-- Permission arrow: goes up the FAR LEFT margin (x=10) to avoid all boxes -->
-  <!-- alice box left edge: x=60, so x=10 is well clear -->
-  <!-- cron_queue box left edge: x=28, so x=10 is clear -->
-  <!-- Path: from permission box left edge, left to x=10, up to y=110, right to cron_queue -->
-  <path d="M 60 360 L 10 360 L 10 108 L 28 108" fill="none" stroke="#d97706" stroke-width="1.5" marker-end="url(#arrow-amber)" stroke-dasharray="5,3"/>
+  <!-- ===== Row 4: Permission bubbling (real CC detail) ===== -->
+  <!-- Permission request goes through MessageBus, then Lead check_inbox handles it. -->
+  <path d="M 60 360 L 10 360 L 10 195 L 60 195" fill="none" stroke="#d97706" stroke-width="1.5" marker-end="url(#arrow-amber)" stroke-dasharray="5,3"/>
   <text x="22" y="258" fill="#d97706" font-size="7" font-weight="600" transform="rotate(-90 22 258)">permission_request ↑</text>
 
   <rect x="60" y="340" width="640" height="50" rx="6" fill="#fffbeb" stroke="#d97706" stroke-width="1.5"/>
-  <text x="380" y="360" fill="#92400e" font-size="11" font-weight="700" text-anchor="middle">权限冒泡: teammate → Lead</text>
-  <text x="80" y="378" fill="#78716c" font-size="9">① 队友需审批 → BUS.send("permission_request")  ② Lead check_inbox → 用户审批 → 回复 approve/deny</text>
+  <text x="380" y="360" fill="#92400e" font-size="11" font-weight="700" text-anchor="middle">权限冒泡（真实 CC，教学版省略）</text>
+  <text x="80" y="378" fill="#78716c" font-size="9">① 队友需审批 → MessageBus 发送 permission_request  ② Lead 收到 → 用户审批 → 回复 approve/deny</text>
 
   <!-- ===== Row 5: Bottom notes ===== -->
   <rect x="60" y="410" width="640" height="44" rx="6" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
   <rect x="80" y="424" width="12" height="10" rx="2" fill="#f0f4ff" stroke="#2563eb" stroke-width="1"/>
   <text x="100" y="434" fill="#475569" font-size="10">s10-s14: prompt 组装、错误恢复、任务图、后台线程、cron 调度</text>
   <rect x="80" y="440" width="12" height="10" rx="2" fill="#ecfeff" stroke="#0891b2" stroke-width="1"/>
-  <text x="100" y="450" fill="#475569" font-size="10">s15: MessageBus + spawn_teammate_thread + send_message + check_inbox + 权限冒泡</text>
+  <text x="100" y="450" fill="#475569" font-size="10">s15: MessageBus + spawn_teammate_thread + send_message + check_inbox（权限冒泡见真实 CC 补充）</text>
 </svg>

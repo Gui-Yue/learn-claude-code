@@ -23,7 +23,7 @@ Both scenarios share the same structure: one side sends a request, the other rep
 
 ## The Solution
 
-![Team Protocols Overview](images/team-protocols-overview.svg)
+![Team Protocols Overview](images/team-protocols-overview.en.svg)
 
 Teaching code continues the agent capability arc from earlier chapters and adds structured protocols on top of S15's team communication. To stay focused on the protocol mechanism, it omits full error recovery, memory, and skill systems. Added: **ProtocolState** (request state tracking), **dispatch_message** (routes incoming messages by type to handlers), **match_response** (correlates response to request via request_id, with type validation).
 

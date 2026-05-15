@@ -16,7 +16,7 @@
   <!-- Title -->
   <rect x="0" y="0" width="760" height="44" fill="url(#header)" rx="8"/>
   <rect x="0" y="36" width="760" height="8" fill="url(#header)"/>
-  <text x="380" y="28" fill="#fff" font-size="15" font-weight="700" text-anchor="middle">Task System — 4 个任务工具 + .tasks/ 持久化 + blockedBy 依赖</text>
+  <text x="380" y="28" fill="#fff" font-size="15" font-weight="700" text-anchor="middle">Task System — 5 个任务工具 + .tasks/ 持久化 + blockedBy 依赖</text>
 
   <!-- Legend -->
   <rect x="40" y="56" width="12" height="10" rx="2" fill="#f0f4ff" stroke="#2563eb" stroke-width="1"/>
@@ -47,7 +47,7 @@
   <text x="498" y="98" fill="#1e3a5f" font-size="10" font-weight="600" text-anchor="middle">TOOL_HANDLERS</text>
   <text x="408" y="114" fill="#2563eb" font-size="9">bash · read · write</text>
   <text x="408" y="128" fill="#0d9488" font-size="9" font-weight="600">create_task · list_tasks</text>
-  <text x="408" y="140" fill="#0d9488" font-size="9" font-weight="600">claim_task · complete_task</text>
+  <text x="408" y="140" fill="#0d9488" font-size="9" font-weight="600">get_task · claim_task · complete_task</text>
 
   <!-- Loop back -->
   <path d="M 603 112 L 640 112 L 640 155 L 70 155 L 70 132" fill="none" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)" stroke-dasharray="6,3"/>
@@ -75,10 +75,12 @@
   <text x="60" y="310" fill="#1e3a5f" font-size="11" font-weight="600">状态机:</text>
   <rect x="120" y="298" width="56" height="20" rx="4" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1"/>
   <text x="148" y="312" fill="#475569" font-size="9" text-anchor="middle">pending</text>
-  <text x="184" y="312" fill="#0d9488" font-size="10" font-weight="600">─claim─→</text>
+  <line x1="176" y1="308" x2="238" y2="308" stroke="#0d9488" stroke-width="1.5" marker-end="url(#arrow-teal)"/>
+  <text x="207" y="303" fill="#0d9488" font-size="8" font-weight="600" text-anchor="middle">claim</text>
   <rect x="240" y="298" width="76" height="20" rx="4" fill="#dbeafe" stroke="#2563eb" stroke-width="1"/>
   <text x="278" y="312" fill="#1e40af" font-size="9" text-anchor="middle">in_progress</text>
-  <text x="324" y="312" fill="#16a34a" font-size="10" font-weight="600">─complete─→</text>
+  <line x1="316" y1="308" x2="408" y2="308" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrow-teal)"/>
+  <text x="362" y="303" fill="#16a34a" font-size="8" font-weight="600" text-anchor="middle">complete</text>
   <rect x="410" y="298" width="72" height="20" rx="4" fill="#dcfce7" stroke="#16a34a" stroke-width="1"/>
   <text x="446" y="312" fill="#166534" font-size="9" text-anchor="middle">completed</text>
   <text x="500" y="312" fill="#94a3b8" font-size="9">CC 无 release 回退，崩溃时用 unassign 清 owner</text>
@@ -88,5 +90,5 @@
   <rect x="60" y="366" width="12" height="10" rx="2" fill="#f0f4ff" stroke="#2563eb" stroke-width="1"/>
   <text x="80" y="376" fill="#475569" font-size="10">s11 保留：循环、prompt 组装、压缩（错误恢复与任务系统独立）</text>
   <rect x="60" y="384" width="12" height="10" rx="2" fill="#f0fdfa" stroke="#0d9488" stroke-width="1"/>
-  <text x="80" y="394" fill="#475569" font-size="10">s12 新增：Task dataclass + 4 个工具 + .tasks/ 持久化 + blockedBy 依赖图</text>
+  <text x="80" y="394" fill="#475569" font-size="10">s12 新增：Task dataclass + 5 个工具 + .tasks/ 持久化 + blockedBy 依赖图</text>
 </svg>

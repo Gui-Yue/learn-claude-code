@@ -58,7 +58,7 @@
 
   <!-- Arrow: cache → LLM -->
   <path d="M 521 170 L 521 195 L 410 195 L 410 212" fill="none" stroke="#059669" stroke-width="1.5" marker-end="url(#arrow-green)"/>
-  <text x="462" y="189" fill="#059669" font-size="9">system=</text>
+  <text x="462" y="189" fill="#059669" font-size="9">system=get_system_prompt(context)</text>
 
   <!-- ===== s09 Agent Loop (blue) ===== -->
 
@@ -80,11 +80,13 @@
 
   <!-- LLM -->
   <rect x="360" y="214" width="100" height="46" rx="8" fill="#f0f4ff" stroke="#2563eb" stroke-width="1.5"/>
-  <text x="410" y="235" fill="#1e3a5f" font-size="12" font-weight="700" text-anchor="middle">LLM</text>
-  <text x="410" y="251" fill="#059669" font-size="8" text-anchor="middle">system = assembled</text>
+  <text x="410" y="231" fill="#1e3a5f" font-size="12" font-weight="700" text-anchor="middle">LLM</text>
+  <text x="410" y="246" fill="#64748b" font-size="8" text-anchor="middle">tool_use?</text>
+  <text x="410" y="258" fill="#059669" font-size="8" text-anchor="middle">system assembled</text>
 
   <!-- arrow → TOOLS -->
   <line x1="460" y1="237" x2="490" y2="237" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="466" y="229" fill="#64748b" font-size="8">yes</text>
 
   <!-- TOOL_HANDLERS -->
   <rect x="493" y="206" width="130" height="62" rx="8" fill="#f0f4ff" stroke="#2563eb" stroke-width="1.5"/>

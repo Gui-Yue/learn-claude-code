@@ -22,7 +22,7 @@ s15-s17 は「誰が何をするか」（タスクシステム）と「どう通
 
 ## ソリューション
 
-![Worktree Overview](images/worktree-overview.svg)
+![Worktree Overview](images/worktree-overview.ja.svg)
 
 Git worktree を使うと、同じリポジトリ内に複数の独立した作業ディレクトリを作成でき、それぞれが独自のブランチを持つ。Alice は `.worktrees/auth-refactor/` で作業、Bob は `.worktrees/ui-login/` で作業——互いに干渉しない。
 
