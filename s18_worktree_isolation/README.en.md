@@ -142,7 +142,7 @@ def run_git(args: list[str]) -> tuple[bool, str]:
 | New functions | — | create_worktree, bind_task_to_worktree, remove_worktree, keep_worktree, validate_worktree_name |
 | Worktree safety | None | Name validation + refuse removal with changes |
 | Event log | None | events.jsonl lifecycle auditing |
-| Lead tools | 14 (s17) | + create_worktree, remove_worktree, keep_worktree, get_task (18) |
+| Lead tools | 14 (s17) | + create_worktree, remove_worktree, keep_worktree (17) |
 | Teammate tools | 8 (s17) | 8 (bash/read/write execute in worktree cwd) |
 
 ---

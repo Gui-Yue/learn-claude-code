@@ -142,7 +142,7 @@ def run_git(args: list[str]) -> tuple[bool, str]:
 | 新規関数 | — | create_worktree, bind_task_to_worktree, remove_worktree, keep_worktree, validate_worktree_name |
 | worktree 安全性 | なし | name 検証 + 変更ありの場合削除拒否 |
 | イベントログ | なし | events.jsonl ライフサイクル監査 |
-| Lead ツール | 14 (s17) | + create_worktree, remove_worktree, keep_worktree, get_task (18) |
+| Lead ツール | 14 (s17) | + create_worktree, remove_worktree, keep_worktree (17) |
 | チームメイトツール | 8 (s17) | 8（bash/read/write が worktree cwd で実行） |
 
 ---

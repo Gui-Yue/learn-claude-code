@@ -142,7 +142,7 @@ def run_git(args: list[str]) -> tuple[bool, str]:
 | 新函数 | — | create_worktree, bind_task_to_worktree, remove_worktree, keep_worktree, validate_worktree_name |
 | worktree 安全 | 无 | name 校验 + 有改动时拒绝删除 |
 | 事件日志 | 无 | events.jsonl 生命周期审计 |
-| Lead 工具 | 14 (s17) | + create_worktree, remove_worktree, keep_worktree, get_task (18) |
+| Lead 工具 | 14 (s17) | + create_worktree, remove_worktree, keep_worktree (17) |
 | 队友工具 | 8 (s17) | 8（bash/read/write 在 worktree cwd 执行） |
 
 ---

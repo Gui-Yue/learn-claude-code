@@ -25,7 +25,7 @@ Both scenarios share the same structure: one side sends a request, the other rep
 
 ![Team Protocols Overview](images/team-protocols-overview.svg)
 
-Teaching code carries forward S15's capabilities (MessageBus, spawn_teammate, inbox injection, background execution, cron scheduling). To stay focused on the protocol mechanism, it omits full error recovery, memory, and skill systems. Added: **ProtocolState** (request state tracking), **dispatch_message** (routes incoming messages by type to handlers), **match_response** (correlates response to request via request_id, with type validation).
+Teaching code continues the agent capability arc from earlier chapters and adds structured protocols on top of S15's team communication. To stay focused on the protocol mechanism, it omits full error recovery, memory, and skill systems. Added: **ProtocolState** (request state tracking), **dispatch_message** (routes incoming messages by type to handlers), **match_response** (correlates response to request via request_id, with type validation).
 
 Two protocols, one mechanism:
 
@@ -192,7 +192,7 @@ Shutdown handshake complete: request → confirm → shutdown. Every step tracke
 | New message types | message, result | + shutdown_request/response, plan_approval_request/response |
 | Teammate lifecycle | Max 10 rounds | Idle loop (waits for inbox messages) |
 | Lead inbox | check_inbox and main loop read separately | Unified consume_lead_inbox |
-| Lead tools | 14 (s15) | + request_shutdown, request_plan, review_plan (17) |
+| Lead tools | 14 (s15) | 14 (core tool set plus request_shutdown, request_plan, review_plan) |
 | Teammate tools | 4 (s15) | + submit_plan (5) |
 
 ---

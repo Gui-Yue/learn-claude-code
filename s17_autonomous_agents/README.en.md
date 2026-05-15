@@ -201,7 +201,7 @@ Two teammates claim and work in parallel. Lead only creates tasks and spawns tea
 | Lead inbox | Prints only, not in context | consume_lead_inbox injects into history |
 | New functions | — | idle_poll, scan_unclaimed_tasks, consume_lead_inbox |
 | Identity persistence | System prompt only | Auto re-inject after compression |
-| Lead tools | 13 | 14 (+ get_task) |
+| Lead tools | 14 (s16) | 14 (unchanged) |
 | Teammate tools | 5 | 8 (+ list_tasks, claim_task, complete_task) |
 | Teammate exit | Exit after task done | Exit only after 60s idle timeout |
 

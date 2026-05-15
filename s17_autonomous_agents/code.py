@@ -115,7 +115,6 @@ def claim_task(task_id: str, owner: str = "agent") -> str:
         if deps: parts.append(f"blocked by: {deps}")
         if missing: parts.append(f"missing deps: {missing}")
         return "Cannot start — " + ", ".join(parts)
-        return f"Blocked by: {deps}"
     task.owner = owner
     task.status = "in_progress"
     save_task(task)
@@ -145,7 +144,7 @@ PROMPT_SECTIONS = {
     "tools": "Available tools: bash, read_file, write_file, "
              "create_task, list_tasks, get_task, claim_task, complete_task, "
              "spawn_teammate, send_message, check_inbox, "
-             "request_shutdown, submit_plan, review_plan.",
+             "request_shutdown, request_plan, review_plan.",
     "workspace": f"Working directory: {WORKDIR}",
     "memory": "Relevant memories are injected below when available.",
 }
@@ -555,9 +554,9 @@ def run_request_shutdown(teammate: str) -> str:
     return f"Shutdown request sent to {teammate} (req: {req_id})"
 
 
-def run_submit_plan(teammate: str, plan: str) -> str:
+def run_request_plan(teammate: str, task: str) -> str:
     """Lead asks a teammate to submit a plan."""
-    BUS.send("lead", teammate, f"Please submit a plan for: {plan}",
+    BUS.send("lead", teammate, f"Please submit a plan for: {task}",
              "message")
     return f"Asked {teammate} to submit a plan"
 
@@ -709,12 +708,12 @@ TOOLS = [
      "input_schema": {"type": "object",
                       "properties": {"teammate": {"type": "string"}},
                       "required": ["teammate"]}},
-    {"name": "submit_plan",
+    {"name": "request_plan",
      "description": "Ask a teammate to submit a plan for review.",
      "input_schema": {"type": "object",
                       "properties": {"teammate": {"type": "string"},
-                                     "plan": {"type": "string"}},
-                      "required": ["teammate", "plan"]}},
+                                     "task": {"type": "string"}},
+                      "required": ["teammate", "task"]}},
     {"name": "review_plan",
      "description": "Approve or reject a submitted plan.",
      "input_schema": {"type": "object",
@@ -733,7 +732,7 @@ TOOL_HANDLERS = {
     "spawn_teammate": run_spawn_teammate,
     "send_message": run_send_message, "check_inbox": run_check_inbox,
     "request_shutdown": run_request_shutdown,
-    "submit_plan": run_submit_plan, "review_plan": run_review_plan,
+    "request_plan": run_request_plan, "review_plan": run_review_plan,
 }
 
 

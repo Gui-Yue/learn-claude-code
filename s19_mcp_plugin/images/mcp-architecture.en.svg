@@ -29,7 +29,7 @@
 
   <!-- ===== Row 1: Lead Loop (s18 preserved) ===== -->
   <rect x="20" y="90" width="70" height="40" rx="8" fill="#eef2ff" stroke="#4f46e5" stroke-width="1.5"/>
-  <text x="55" y="114" fill="#4f46e5" font-size="8" font-weight="600" text-anchor="middle">cron</text>
+  <text x="55" y="114" fill="#4f46e5" font-size="8" font-weight="600" text-anchor="middle">turn</text>
 
   <line x1="90" y1="110" x2="104" y2="110" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
 
@@ -100,9 +100,9 @@
   <!-- ===== Row 3: Bottom notes ===== -->
   <rect x="30" y="400" width="700" height="22" rx="4" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
   <rect x="50" y="408" width="12" height="10" rx="2" fill="#f0f4ff" stroke="#2563eb" stroke-width="1"/>
-  <text x="70" y="418" fill="#475569" font-size="10">s18: worktree + events.jsonl + protocols + auto_claim (Lead 16)</text>
+  <text x="70" y="418" fill="#475569" font-size="10">s18: worktree + events.jsonl + protocols + auto_claim (Lead 17)</text>
   <rect x="370" y="408" width="12" height="10" rx="2" fill="#fff1f2" stroke="#dc2626" stroke-width="1"/>
-  <text x="390" y="418" fill="#475569" font-size="10">s19: MCPClient + assemble_tool_pool + connect_mcp (Lead 16 + dynamic MCP)</text>
+  <text x="390" y="418" fill="#475569" font-size="10">s19: MCPClient + assemble_tool_pool + connect_mcp (Lead 18 + dynamic MCP)</text>
 
   <!-- ===== Final note ===== -->
   <rect x="30" y="430" width="700" height="22" rx="4" fill="#fff1f2" stroke="#dc2626" stroke-width="1"/>

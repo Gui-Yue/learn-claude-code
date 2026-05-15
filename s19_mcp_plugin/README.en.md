@@ -149,7 +149,7 @@ This is a teaching simplification. In real CC, MCP tools are available to both t
 | Namespace | — | mcp\_\_server\_\_tool prevents collisions |
 | Tool descriptions | No annotations | (readOnly)/(destructive) annotations |
 | Prompt cache | Yes (since s10) | Removed — tool pool is dynamic, cache goes stale |
-| Lead tools | 18 (s18) | 19 (+connect_mcp) |
+| Lead tools | 17 (s18) | 18 (+connect_mcp) |
 | Teammate tools | 8 (s18) | 8 (unchanged, MCP tools are Lead-only) |
 | Extension method | Write code to add tools | Standard protocol, implement servers in any language |
 

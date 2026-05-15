@@ -201,7 +201,7 @@ if len(messages) <= 3:
 | Lead inbox | 只打印，不进上下文 | consume_lead_inbox 统一注入 history |
 | 新函数 | — | idle_poll, scan_unclaimed_tasks, consume_lead_inbox |
 | 身份保持 | 仅 system prompt | 压缩后自动重注入 |
-| Lead 工具 | 13 | 14（+ get_task） |
+| Lead 工具 | 14 (s16) | 14（不变） |
 | 队友工具 | 5 | 8（+ list_tasks, claim_task, complete_task） |
 | 队友退出条件 | 完成任务即退出 | 60s 无新任务才退出 |
 

@@ -201,7 +201,7 @@ if len(messages) <= 3:
 | Lead inbox | 印刷のみ、コンテキストに入らない | consume_lead_inbox で history に注入 |
 | 新規関数 | — | idle_poll, scan_unclaimed_tasks, consume_lead_inbox |
 | 身份保持 | system prompt のみ | 圧縮後に自動再注入 |
-| Lead ツール | 13 | 14（+ get_task） |
+| Lead ツール | 14 (s16) | 14（変更なし） |
 | チームメイトツール | 5 | 8（+ list_tasks, claim_task, complete_task） |
 | チームメイト終了条件 | タスク完了後即終了 | 60s アイドルタイムアウト後のみ終了 |
 

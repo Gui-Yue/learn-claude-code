@@ -149,7 +149,7 @@ def agent_loop(messages, context):
 | 命名空间 | — | mcp\_\_server\_\_tool 避免冲突 |
 | 工具描述 | 无标注 | (readOnly)/(destructive) 标注 |
 | prompt 缓存 | 有（s10 起） | 去掉——工具池动态变化后缓存失效 |
-| Lead 工具 | 18 (s18) | 19 (+connect_mcp) |
+| Lead 工具 | 17 (s18) | 18 (+connect_mcp) |
 | Teammate 工具 | 8 (s18) | 8（不变，MCP 工具仅 Lead 可用） |
 | 扩展方式 | 写代码加工具 | 标准协议，任意语言实现 server |
 

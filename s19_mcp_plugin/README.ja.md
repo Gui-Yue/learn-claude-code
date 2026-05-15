@@ -149,7 +149,7 @@ def agent_loop(messages, context):
 | 名前空間 | — | mcp\_\_server\_\_tool 衝突防止 |
 | ツール説明 | アノテーションなし | (readOnly)/(destructive) アノテーション |
 | プロンプトキャッシュ | あり（s10 から） | 削除 — ツールプールが動的、キャッシュが陳腐化 |
-| Lead ツール | 18 (s18) | 19 (+connect_mcp) |
+| Lead ツール | 17 (s18) | 18 (+connect_mcp) |
 | チームメイトツール | 8 (s18) | 8（変更なし、MCP ツールは Lead のみ） |
 | 拡張方法 | ツール追加のコードを書く | 標準プロトコル、任意言語で server を実装 |
 
