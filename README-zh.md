@@ -106,7 +106,7 @@ Claude Code = 一个 agent loop
 
 就这些。这就是全部架构。每一个组件都是 harness 机制 -- 为 agent 构建的栖居世界的一部分。Agent 本身呢？是 Claude。一个模型。由 Anthropic 在人类推理和代码的全部广度上训练而成。Harness 没有让 Claude 变聪明。Claude 本来就聪明。Harness 给了 Claude 双手、双眼和一个工作空间。
 
-这就是 Claude Code 作为教学标本的意义：**它展示了当你信任模型、把工程精力集中在 harness 上时会发生什么。** 本仓库的每一个课程（s01-s19）都在逆向工程 Claude Code 架构中的一个 harness 机制。学完之后，你理解的不只是 Claude Code 怎么工作，而是适用于任何领域、任何 agent 的 harness 工程通用原则。
+这就是 Claude Code 作为教学标本的意义：**它展示了当你信任模型、把工程精力集中在 harness 上时会发生什么。** 本仓库的课程（s01-s20）逐步拆解并重组 Claude Code 架构中的 harness 机制。学完之后，你理解的不只是 Claude Code 怎么工作，而是适用于任何领域、任何 agent 的 harness 工程通用原则。
 
 启示不是 "复制 Claude Code"。启示是：**最好的 agent 产品，出自那些明白自己的工作是 harness 而非 intelligence 的工程师之手。**
 
@@ -159,7 +159,7 @@ Claude Code = 一个 agent loop
     让 agent 在特定领域高效工作的 harness。
 ```
 
-**19 个递进式课程, 从简单循环到外接插件。**
+**20 个递进式课程, 从简单循环到完整 Harness。**
 **每个课程添加一个 harness 机制。每个机制有一句格言。**
 
 > **s01** &nbsp; *"One loop & Bash is all you need"* &mdash; 一个工具 + 一个循环 = 一个 Agent
@@ -199,6 +199,8 @@ Claude Code = 一个 agent loop
 > **s18** &nbsp; *"各干各的目录, 互不干扰"* &mdash; 任务管目标, worktree 管目录, 按 ID 绑定
 >
 > **s19** &nbsp; *"能力不够? 插上 MCP"* &mdash; 多传输、通道路由、工具池合并
+>
+> **s20** &nbsp; *"机制很多，循环一个"* &mdash; 前面所有机制回到一个完整 harness
 
 ---
 
@@ -253,8 +255,8 @@ pip install -r requirements.txt
 cp .env.example .env   # 编辑 .env 填入你的 ANTHROPIC_API_KEY
 
 python s01_agent_loop/code.py        # 起点 — 一个循环 + bash
-python s08_context_compact/code.py    # 上下文压缩（最复杂章）
-python s_full/code.py                 # 总纲: 全部 19 个机制合一
+python s08_context_compact/code.py    # 上下文压缩（复杂章）
+python s20_comprehensive/code.py      # 终点章: 全部机制归到一个循环
 ```
 
 ### Web 平台
@@ -265,7 +267,7 @@ python s_full/code.py                 # 总纲: 全部 19 个机制合一
 cd web && npm install && npm run dev   # http://localhost:3000
 ```
 
-## 五个阶段
+## 六个阶段
 
 | 阶段 | 章节 | 你在构建什么 |
 |---|---|---|
@@ -274,6 +276,7 @@ cd web && npm install && npm run dev   # http://localhost:3000
 | **知识与韧性** | `s09-s11` | memory → prompt assembly → error recovery |
 | **持久化工作** | `s12-s14` | task graph → background → cron |
 | **多 Agent 平台** | `s15-s19` | teams → protocols → autonomy → worktree → MCP |
+| **完整 Harness** | `s20` | 全部机制归到一个 agent loop |
 
 ## 全部章节
 
@@ -298,6 +301,7 @@ cd web && npm install && npm run dev   # http://localhost:3000
 | [s17](./s17_autonomous_agents/) | Autonomous Agents | 空闲循环 / 自动认领 |
 | [s18](./s18_worktree_isolation/) | Worktree Isolation | `WorktreeRecord` / 任务-目录绑定 |
 | [s19](./s19_mcp_plugin/) | MCP Plugin | 多传输 / 通道路由 / 工具池合并 |
+| [s20](./s20_comprehensive/) | Comprehensive Agent | 全部机制归到一个循环 |
 | [s_full](./s_full/) | 总纲 | s01-s19 全部机制合并 |
 
 ## 项目结构
@@ -313,16 +317,18 @@ learn-claude-code/
   s02_tool_use/
   ...
   s19_mcp_plugin/
-  s_full/                  # 总纲
+  s20_comprehensive/       # 终点章
+  s_full/                  # 旧总纲
   agents/                  # 扁平副本，方便 python agents/sXX.py 快速运行
   skills/                  # s07 使用的 skill 文件
   docs/                    # 旧版线上文档（已归档）
   web/                     # Web 教学平台
   tests/
+```
 
 ## 学完之后 -- 从理解到落地
 
-19 个课程走完, 你已经从内到外理解了 harness 工程的运作原理。两种方式把知识变成产品:
+20 个课程走完, 你已经从内到外理解了 harness 工程的运作原理。两种方式把知识变成产品:
 
 ### Kode Agent CLI -- 开源 Coding Agent CLI
 

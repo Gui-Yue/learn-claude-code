@@ -106,7 +106,7 @@ Claude Code = 一つの agent loop
 
 これがすべてだ。これが全アーキテクチャ。すべてのコンポーネントは Harness メカニズム -- Agent が住む世界の一部。Agent そのものは？ Claude だ。モデル。Anthropic が人類の推論とコードの全幅で訓練した。Harness が Claude を賢くしたのではない。Claude は元々賢い。Harness が Claude に手と目とワークスペースを与えた。
 
-これが Claude Code が理想的な教材である理由だ：**モデルを信頼し、工学的努力を Harness に集中させるとどうなるかを示している。** このリポジトリの各セッション（s01-s19）は Claude Code アーキテクチャから一つの Harness メカニズムをリバースエンジニアリングする。終了時には、Claude Code の仕組みだけでなく、あらゆるドメインのあらゆる Agent に適用される Harness 工学の普遍的原則を理解している。
+これが Claude Code が理想的な教材である理由だ：**モデルを信頼し、工学的努力を Harness に集中させるとどうなるかを示している。** このリポジトリの各セッション（s01-s20）は Claude Code アーキテクチャの Harness メカニズムを段階的に分解し、最後に組み直す。終了時には、Claude Code の仕組みだけでなく、あらゆるドメインのあらゆる Agent に適用される Harness 工学の普遍的原則を理解している。
 
 教訓は「Claude Code をコピーせよ」ではない。教訓は：**最高の Agent プロダクトは、自分の仕事が Harness であって Intelligence ではないと理解しているエンジニアが作る。**
 
@@ -159,7 +159,7 @@ Claude Code = 一つの agent loop
     Agent を特定ドメインで効果的にする Harness -- の作り方を教える。
 ```
 
-**19 の段階的セッション、シンプルなループから外付けプラグインまで。**
+**20 の段階的セッション、シンプルなループから完全な Harness まで。**
 **各セッションは 1 つの Harness メカニズムを追加する。各メカニズムには 1 つのモットーがある。**
 
 > **s01** &nbsp; *"One loop & Bash is all you need"* &mdash; 1つのツール + 1つのループ = エージェント
@@ -199,6 +199,8 @@ Claude Code = 一つの agent loop
 > **s18** &nbsp; *"各自のディレクトリで作業し、互いに干渉しない"* &mdash; タスクは目標を管理、worktree はディレクトリを管理、IDで紐付け
 >
 > **s19** &nbsp; *"能力不足？ MCP でプラグイン"* &mdash; マルチトランスポート、チャネルルーティング、ツールプール統合
+>
+> **s20** &nbsp; *"仕組みは多く、ループは一つ"* &mdash; すべての仕組みを 1 つの Harness に戻す
 
 ---
 
@@ -253,8 +255,8 @@ pip install -r requirements.txt
 cp .env.example .env   # .env を編集して ANTHROPIC_API_KEY を入力
 
 python s01_agent_loop/code.py        # ここから開始 — 1ループ + bash
-python s08_context_compact/code.py    # コンテキスト圧縮（最複雑章）
-python s_full/code.py                 # 総括: 全19メカニズム統合
+python s08_context_compact/code.py    # コンテキスト圧縮（複雑章）
+python s20_comprehensive/code.py      # 終点: 全メカニズムを 1 つのループへ
 ```
 
 ### Web プラットフォーム
@@ -265,7 +267,7 @@ python s_full/code.py                 # 総括: 全19メカニズム統合
 cd web && npm install && npm run dev   # http://localhost:3000
 ```
 
-## 5つの段階
+## 6つの段階
 
 | 段階 | セッション | 構築するもの |
 |---|---|---|
@@ -274,6 +276,7 @@ cd web && npm install && npm run dev   # http://localhost:3000
 | **知識と回復力** | `s09-s11` | memory → prompt assembly → error recovery |
 | **永続的作業** | `s12-s14` | task graph → background → cron |
 | **マルチエージェント基盤** | `s15-s19` | teams → protocols → autonomy → worktree → MCP |
+| **完全な Harness** | `s20` | すべての仕組みを agent loop に統合 |
 
 ## 全セッション
 
@@ -298,6 +301,7 @@ cd web && npm install && npm run dev   # http://localhost:3000
 | [s17](./s17_autonomous_agents/) | Autonomous Agents | アイドルサイクル / 自動クレーム |
 | [s18](./s18_worktree_isolation/) | Worktree Isolation | `WorktreeRecord` / タスク-ディレクトリ紐付け |
 | [s19](./s19_mcp_plugin/) | MCP Plugin | マルチトランスポート / チャネルルーティング / ツールプール統合 |
+| [s20](./s20_comprehensive/) | Comprehensive Agent | すべての仕組みを 1 つのループへ |
 | [s_full](./s_full/) | 総括 | s01-s19 全メカニズム統合 |
 
 ## プロジェクト構成
@@ -313,23 +317,18 @@ learn-claude-code/
   s02_tool_use/
   ...
   s19_mcp_plugin/
-  s_full/                  # 総括
+  s20_comprehensive/       # 終点セッション
+  s_full/                  # 旧総括
   agents/                  # フラットコピー、python agents/sXX.py でクイック実行
   skills/                  # s07 で使用するスキルファイル
   docs/                    # 旧バージョン（アーカイブ）
   web/                     # Web 学習プラットフォーム
   tests/
-
----
-<!-- OLD CONTENT REMOVED -->
 ```
-<!-- The old sections above are replaced -->
 
 ## 次のステップ -- 理解から出荷へ
 
-## 次のステップ -- 理解から出荷へ
-
-19 セッションを終えれば、Harness 工学の内部構造を完全に理解している。その知識を活かす 2 つの方法:
+20 セッションを終えれば、Harness 工学の内部構造を完全に理解している。その知識を活かす 2 つの方法:
 
 ### Kode Agent CLI -- オープンソース Coding Agent CLI
 

@@ -159,7 +159,7 @@ Every lesson layers one harness mechanism on top of this loop -- the loop itself
 
 ---
 
-## 19 Progressive Lessons
+## 20 Progressive Lessons
 
 **Each lesson adds one harness mechanism. Each mechanism has a motto.**
 
@@ -200,10 +200,12 @@ Every lesson layers one harness mechanism on top of this loop -- the loop itself
 > **s18** &nbsp; *"Each works in its own directory, no interference"* &mdash; tasks own goals, worktrees own directories, bound by ID
 >
 > **s19** &nbsp; *"Not enough capability? Plug in more via MCP"* &mdash; multi-transport, channel routing, tool pool merging
+>
+> **s20** &nbsp; *"Many mechanisms, one loop"* &mdash; all previous mechanisms return to one complete harness
 
 ---
 
-## Five Stages
+## Six Stages
 
 | Stage | Chapters | What you are building |
 |---|---|---|
@@ -212,6 +214,7 @@ Every lesson layers one harness mechanism on top of this loop -- the loop itself
 | **Knowledge and resilience** | `s09-s11` | memory → prompt assembly → error recovery |
 | **Durable work** | `s12-s14` | task graph → background execution → scheduled triggers |
 | **Multi-agent platform** | `s15-s19` | teams → protocols → autonomy → worktree isolation → MCP |
+| **Complete harness** | `s20` | full agent loop with all mechanisms assembled |
 
 ---
 
@@ -238,6 +241,7 @@ Every lesson layers one harness mechanism on top of this loop -- the loop itself
 | [s17](./s17_autonomous_agents/) | Autonomous Agents | idle cycle / auto-claim / self-organization |
 | [s18](./s18_worktree_isolation/) | Worktree Isolation | `WorktreeRecord` / task-directory binding |
 | [s19](./s19_mcp_plugin/) | MCP Plugin | multi-transport / channel routing / tool pool merge |
+| [s20](./s20_comprehensive/) | Comprehensive Agent | all mechanisms around one loop |
 | [s_full](./s_full/) | Capstone | all mechanisms from s01-s19 merged |
 
 ---
@@ -257,7 +261,7 @@ s08_context_compact/
 
 Read the `README.md` for the core idea and work through the code. Complex chapters have `<details>` folds for deep dives -- open them when you want to go deeper. Simple chapters have 0-1 diagrams, complex chapters have more.
 
-Read from s01 through s19 in order. Each chapter assumes you've read the previous ones and ends with a hook into the next.
+Read from s01 through s20 in order. Each chapter assumes you've read the previous ones and ends with a hook into the next.
 
 ---
 
@@ -271,7 +275,7 @@ cp .env.example .env   # configure ANTHROPIC_API_KEY
 
 python s01_agent_loop/code.py        # Start here -- one loop + bash
 python s08_context_compact/code.py   # Context compaction (complex)
-python s_full/code.py                # Capstone: all mechanisms
+python s20_comprehensive/code.py     # Endpoint: all mechanisms in one loop
 ```
 
 ---
@@ -289,7 +293,8 @@ learn-claude-code/
   s02_tool_use/
   ...
   s19_mcp_plugin/
-  s_full/                  # capstone
+  s20_comprehensive/       # endpoint chapter
+  s_full/                  # legacy capstone
   agents/                  # flat copies for quick python agents/sXX.py
   skills/                  # skill files used by s07
   docs/                    # legacy online docs (archived)
@@ -301,7 +306,7 @@ learn-claude-code/
 
 ## What's Next
 
-After 19 lessons, you understand harness engineering from the inside out. Two paths to turn that knowledge into product:
+After 20 lessons, you understand harness engineering from the inside out. Two paths to turn that knowledge into product:
 
 ### Kode Agent CLI -- Open-Source Coding Agent CLI
 
