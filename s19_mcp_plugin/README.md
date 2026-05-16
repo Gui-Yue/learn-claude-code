@@ -2,7 +2,7 @@
 
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-s01 → ... → s17 → s18 → `s19`
+s01 → ... → s17 → s18 → `s19` → [s20](../s20_comprehensive/)
 
 > *"外接工具, 标准协议"* — 发现、合并、调用，Agent 不需要知道工具是谁写的。
 >
@@ -172,19 +172,13 @@ python s19_mcp_plugin/code.py
 
 ---
 
-## 你走到了这里
+## 接下来
 
-这是最后一章。回顾：
+现在 Agent 可以通过标准协议接入外部工具了。但前面 19 章每章都只加一个机制，真实 Agent 不会这样拆开运行。
 
-```
-s01-s04   工具管线     loop → dispatch → permission → hooks
-s05-s08   单Agent能力   planning → subagent → skill → compact
-s09-s11   知识与韧性    memory → prompt → error recovery
-s12-s14   持久化工作    task graph → background → cron
-s15-s19   多Agent平台   teams → protocols → autonomy → worktree → MCP
-```
+工具、权限、hooks、todo、任务图、记忆、压缩、后台、cron、团队、worktree、MCP 这些机制应该挂在同一个循环上，而不是散在 19 个 demo 里。
 
-19 个章节，每个只加一个机制。每个机制都挂在同一个 while True 循环上——循环本身，从未改变。
+s20 Comprehensive Agent → 把前 19 章的机制合回一个完整 harness。机制很多，循环一个。
 
 <details>
 <summary>深入 CC 源码</summary>

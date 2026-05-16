@@ -2,7 +2,7 @@
 
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-s01 → s02 → s03 → s04 → s05 → s06 → `s07` → [s08](../s08_context_compact/) → s09 → ... → s19
+s01 → s02 → s03 → s04 → s05 → s06 → `s07` → [s08](../s08_context_compact/) → s09 → ... → s20
 > *"Load when needed, don't stuff the prompt"* — tool_result で注入、system prompt には詰め込まない。
 >
 > **Harness レイヤー**: 知識 — 必要に応じて読み込み、コンテキストに詰め込まない。
@@ -174,7 +174,7 @@ CC の SKILL.md YAML frontmatter は `parseSkillFrontmatterFields()`（`loadSkil
 
 - 複数ファイル・複数ソース → 1 つの `skills/` ディレクトリ：2 層読み込みの核心概念を示すのに十分
 - 複数の frontmatter フィールド → name/description のみ解析：解析の複雑さを削減
-- forked skills（`context: 'fork'`）→ 省略：サブ Agent のスキル注入は s13 に委ねる
+- forked skills（`context: 'fork'`）→ 省略：教学版では inline skill loading のみ展開する
 - `Skill` ツールの入力 `skill`+`args` → 教育版は `name` を使用：追加の引数解析の複雑さを回避
 
 </details>

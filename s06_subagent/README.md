@@ -2,7 +2,7 @@
 
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-s01 → s02 → s03 → s04 → s05 → `s06` → [s07](../s07_skill_loading/) → s08 → ... → s19
+s01 → s02 → s03 → s04 → s05 → `s06` → [s07](../s07_skill_loading/) → s08 → ... → s20
 
 > *"大任务拆小, 每个小任务干净的上下文"* — Subagent 用独立 messages[], 不污染主对话。
 >

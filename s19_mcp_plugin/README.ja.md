@@ -2,7 +2,7 @@
 
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-s01 → ... → s17 → s18 → `s19`
+s01 → ... → s17 → s18 → `s19` → [s20](../s20_comprehensive/)
 
 > *"外部ツール、標準プロトコル"* — 発見、統合、呼び出し。Agent はツールを誰が書いたか知る必要がない。
 >
@@ -172,19 +172,13 @@ python s19_mcp_plugin/code.py
 
 ---
 
-## ここまで来た
+## 次の章
 
-これが最終章。振り返り：
+Agent は標準プロトコルで外部ツールに接続できるようになりました。しかし前 19 章は各章で 1 つの仕組みだけを追加しています。実際の Agent は 19 個の demo に分かれて動くわけではありません。
 
-```
-s01-s04   ツールパイプライン  loop → dispatch → permission → hooks
-s05-s08   単体 Agent 能力     planning → subagent → skill → compact
-s09-s11   知識と韧性          memory → prompt → error recovery
-s12-s14   永続的作業          task graph → background → cron
-s15-s19   マルチ Agent        teams → protocols → autonomy → worktree → MCP
-```
+tools、permissions、hooks、todo、task graph、memory、compact、background work、cron、teams、worktree、MCP は、別々の例ではなく同じ loop に接続されるべきです。
 
-19 の章、各章は 1 つの仕組みを追加。各仕組みは同じ while True ループに接続 — ループそのものは、変わっていない。
+s20 Comprehensive Agent → 前 19 章の仕組みを 1 つの完全な harness に統合。仕組みは多く、loop は 1 つ。
 
 <details>
 <summary>CC ソースコード深掘り</summary>

@@ -2,7 +2,7 @@
 
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-s01 → ... → s17 → s18 → `s19`
+s01 → ... → s17 → s18 → `s19` → [s20](../s20_comprehensive/)
 
 > *"External tools, standard protocol"* — Discover, merge, invoke. Agent doesn't need to know who wrote them.
 >
@@ -172,19 +172,13 @@ What to observe: After connecting to an MCP server, do tool names have `mcp__doc
 
 ---
 
-## You Made It Here
+## What's Next
 
-This is the final chapter. Looking back:
+The Agent can now connect external tools through a standard protocol. But the first 19 chapters each add one mechanism in isolation; a real Agent does not run as 19 separate demos.
 
-```
-s01-s04   Tool pipeline     loop → dispatch → permission → hooks
-s05-s08   Single-agent      planning → subagent → skill → compact
-s09-s11   Knowledge         memory → prompt → error recovery
-s12-s14   Persistent work   task graph → background → cron
-s15-s19   Multi-agent       teams → protocols → autonomy → worktree → MCP
-```
+Tools, permissions, hooks, todo, task graph, memory, compact, background work, cron, teams, worktrees, and MCP should all attach to the same loop, not live in separate examples.
 
-19 chapters, each adding one mechanism. Every mechanism hooks onto the same while True loop — the loop itself, unchanged.
+s20 Comprehensive Agent → Combine the first 19 chapters into one complete harness. Many mechanisms, one loop.
 
 <details>
 <summary>Deep Dive into CC Source</summary>

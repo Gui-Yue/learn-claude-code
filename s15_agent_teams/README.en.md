@@ -2,7 +2,7 @@
 
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-s01 → ... → s13 → s14 → `s15` → [s16](../s16_team_protocols/) → s17 → s18 → s19
+s01 → ... → s13 → s14 → `s15` → [s16](../s16_team_protocols/) → s17 → s18 → s19 → s20
 > *"One agent isn't enough, form a team"* — File-based inboxes + teammate threads.
 >
 > **Harness Layer**: Teams — Multi-agent collaboration, message bus.
@@ -62,7 +62,7 @@ class MessageBus:
         return msgs
 ```
 
-Why files instead of in-memory queues? Teaching code uses files because they're直观 and observable across threads. Real CC also uses file inboxes (`~/.claude/teams/{team}/inboxes/`) but adds `proper-lockfile` for concurrent write safety. The teaching version's `read_inbox` has a read + unlink race, concurrent reads could lose messages, acceptable for teaching purposes.
+Why files instead of in-memory queues? Teaching code uses files because they're intuitive and observable across threads. Real CC also uses file inboxes (`~/.claude/teams/{team}/inboxes/`) but adds `proper-lockfile` for concurrent write safety. The teaching version's `read_inbox` has a read + unlink race, concurrent reads could lose messages, acceptable for teaching purposes.
 
 ### spawn_teammate_thread: Launching a Teammate
 

@@ -2,7 +2,7 @@
 
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-s01 → ... → s16 → s17 → `s18` → [s19](../s19_mcp_plugin/)
+s01 → ... → s16 → s17 → `s18` → [s19](../s19_mcp_plugin/) → s20
 
 > *"各干各的目录, 互不干扰"* — 任务管目标, worktree 管目录, 按 ID 绑定。
 >

@@ -2,7 +2,7 @@
 
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-s01 → ... → s16 → s17 → `s18` → [s19](../s19_mcp_plugin/)
+s01 → ... → s16 → s17 → `s18` → [s19](../s19_mcp_plugin/) → s20
 
 > *"それぞれのディレクトリ、互いに干渉しない"* — タスクは目標を管理、worktree はディレクトリを管理、ID で紐付け。
 >

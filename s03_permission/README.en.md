@@ -2,7 +2,7 @@
 
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-s01 → s02 → `s03` → [s04](../s04_hooks/) → s05 → ... → s19
+s01 → s02 → `s03` → [s04](../s04_hooks/) → s05 → ... → s20
 > *"Check permissions before executing"* — The permission pipeline decides which operations need approval.
 >
 > **Harness Layer**: Permission — a gate before tool execution.

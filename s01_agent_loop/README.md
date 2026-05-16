@@ -2,7 +2,7 @@
 
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-`s01` → s02 → s03 → s04 → ... → s19
+`s01` → [s02](../s02_tool_use/) → s03 → s04 → ... → s20
 > *"One loop & Bash is all you need"* — 一个工具 + 一个循环 = 一个 Agent。
 >
 > **Harness 层**: 循环 — 模型与真实世界的第一道连接。

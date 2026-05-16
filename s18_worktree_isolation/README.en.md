@@ -2,7 +2,7 @@
 
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-s01 → ... → s16 → s17 → `s18` → [s19](../s19_mcp_plugin/)
+s01 → ... → s16 → s17 → `s18` → [s19](../s19_mcp_plugin/) → s20
 
 > *"Separate directories, no conflicts"* — Tasks own the goal, worktrees own the directory, bound by ID.
 >

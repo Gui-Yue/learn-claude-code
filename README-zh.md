@@ -72,9 +72,9 @@ Harness = Tools + Knowledge + Observation + Action Interfaces + Permissions
 
 - **实现工具。** 给 agent 一双手。文件读写、Shell 执行、API 调用、浏览器控制、数据库查询。每个工具都是 agent 在环境中可以采取的一个行动。设计它们时要原子化、可组合、描述清晰。
 
-- **策划知识。** 给 agent 领域专长。产品文档、架构决策记录、风格指南、合规要求。按需加载（s05），不要前置塞入。Agent 应该知道有什么可用，然后自己拉取所需。
+- **策划知识。** 给 agent 领域专长。产品文档、架构决策记录、风格指南、合规要求。按需加载（s07），不要前置塞入。Agent 应该知道有什么可用，然后自己拉取所需。
 
-- **管理上下文。** 给 agent 干净的记忆。子 agent 隔离（s04）防止噪声泄露。上下文压缩（s06）防止历史淹没。任务系统（s07）让目标持久化到单次对话之外。
+- **管理上下文。** 给 agent 干净的记忆。子 agent 隔离（s06）防止噪声泄露。上下文压缩（s08）防止历史淹没。任务系统（s12）让目标持久化到单次对话之外。
 
 - **控制权限。** 给 agent 边界。沙箱化文件访问。对破坏性操作要求审批。在 agent 和外部系统之间实施信任边界。这是安全工程与 harness 工程的交汇点。
 
@@ -302,7 +302,6 @@ cd web && npm install && npm run dev   # http://localhost:3000
 | [s18](./s18_worktree_isolation/) | Worktree Isolation | `WorktreeRecord` / 任务-目录绑定 |
 | [s19](./s19_mcp_plugin/) | MCP Plugin | 多传输 / 通道路由 / 工具池合并 |
 | [s20](./s20_comprehensive/) | Comprehensive Agent | 全部机制归到一个循环 |
-| [s_full](./s_full/) | 总纲 | s01-s19 全部机制合并 |
 
 ## 项目结构
 
@@ -318,7 +317,6 @@ learn-claude-code/
   ...
   s19_mcp_plugin/
   s20_comprehensive/       # 终点章
-  s_full/                  # 旧总纲
   agents/                  # 扁平副本，方便 python agents/sXX.py 快速运行
   skills/                  # s07 使用的 skill 文件
   docs/                    # 旧版线上文档（已归档）

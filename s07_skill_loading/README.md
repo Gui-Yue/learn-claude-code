@@ -2,7 +2,7 @@
 
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-s01 → s02 → s03 → s04 → s05 → s06 → `s07` → [s08](../s08_context_compact/) → s09 → ... → s19
+s01 → s02 → s03 → s04 → s05 → s06 → `s07` → [s08](../s08_context_compact/) → s09 → ... → s20
 > *"用到时再加载, 别全塞 prompt 里"* — 通过 tool_result 注入, 不塞 system prompt。
 >
 > **Harness 层**: 知识 — 按需加载, 不堆满上下文。
@@ -174,7 +174,7 @@ CC 的 SKILL.md YAML frontmatter 由 `parseSkillFrontmatterFields()` 解析（`l
 
 - 多文件多来源 → 1 个 `skills/` 目录：足以展示两级加载的核心概念
 - 多个 frontmatter 字段 → 只解析 name/description：减少解析复杂度
-- forked skills（`context: 'fork'`）→ 省略：子 Agent 的技能注入留给 s13
+- forked skills（`context: 'fork'`）→ 省略：教学版只展开 inline 技能加载
 - `Skill` 工具输入 `skill`+`args` → 教学版用 `name`：避免参数解析的额外复杂度
 
 </details>

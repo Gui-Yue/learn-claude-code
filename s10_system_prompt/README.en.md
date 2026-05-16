@@ -2,7 +2,7 @@
 
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-s01 → ... → s08 → s09 → `s10` → [s11](../s11_error_recovery/) → s12 → ... → s19
+s01 → ... → s08 → s09 → `s10` → [s11](../s11_error_recovery/) → s12 → ... → s20
 > *"prompt is assembled, not hardcoded"* — Sections + on-demand assembly + caching.
 >
 > **Harness Layer**: Prompt — assembled at runtime, never hardcoded.

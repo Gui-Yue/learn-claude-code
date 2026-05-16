@@ -2,7 +2,7 @@
 
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-s01 → ... → s14 → s15 → `s16` → [s17](../s17_autonomous_agents/) → s18 → s19
+s01 → ... → s14 → s15 → `s16` → [s17](../s17_autonomous_agents/) → s18 → s19 → s20
 > *"Teammates need agreements"* — request-response pattern drives all negotiation.
 >
 > **Harness Layer**: Protocols — Structured handshakes between agents.

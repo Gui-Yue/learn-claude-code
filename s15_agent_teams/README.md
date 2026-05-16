@@ -2,7 +2,7 @@
 
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-s01 → ... → s13 → s14 → `s15` → [s16](../s16_team_protocols/) → s17 → s18 → s19
+s01 → ... → s13 → s14 → `s15` → [s16](../s16_team_protocols/) → s17 → s18 → s19 → s20
 > *"一个搞不定, 组队来"* — 文件收件箱 + 队友线程。
 >
 > **Harness 层**: 团队 — 多 Agent 协作, 消息总线。

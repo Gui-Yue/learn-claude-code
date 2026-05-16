@@ -2,7 +2,7 @@
 
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-s01 → ... → s15 → s16 → `s17` → [s18](../s18_worktree_isolation/) → s19
+s01 → ... → s15 → s16 → `s17` → [s18](../s18_worktree_isolation/) → s19 → s20
 
 > *"Check the board, claim the task"* — poll when idle, work when found.
 >

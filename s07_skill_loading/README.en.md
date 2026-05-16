@@ -2,7 +2,7 @@
 
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-s01 → s02 → s03 → s04 → s05 → s06 → `s07` → [s08](../s08_context_compact/) → s09 → ... → s19
+s01 → s02 → s03 → s04 → s05 → s06 → `s07` → [s08](../s08_context_compact/) → s09 → ... → s20
 > *"Load when needed, don't stuff the prompt"* — Inject via tool_result, not system prompt.
 >
 > **Harness Layer**: Knowledge — load on demand, don't fill the context.
@@ -174,7 +174,7 @@ The complete field list changes across versions; above are the core fields relev
 
 - Multiple files and sources → 1 `skills/` directory: sufficient to demonstrate the core concept of two-level loading
 - Multiple frontmatter fields → only parse name/description: reduces parsing complexity
-- Forked skills (`context: 'fork'`) → omitted: sub-Agent skill injection deferred to s13
+- Forked skills (`context: 'fork'`) → omitted: the teaching version only expands inline skill loading
 - `Skill` tool input `skill`+`args` → teaching version uses `name`: avoids extra argument parsing complexity
 
 </details>

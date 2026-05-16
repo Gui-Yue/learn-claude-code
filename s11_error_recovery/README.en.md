@@ -2,7 +2,7 @@
 
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-s01 → ... → s09 → s10 → `s11` → [s12](../s12_task_system/) → s13 → ... → s19
+s01 → ... → s09 → s10 → `s11` → [s12](../s12_task_system/) → s13 → ... → s20
 > *"Errors aren't the end, they're the start of a retry"* — escalate tokens, compact context, switch models.
 >
 > **Harness layer**: Resilience — classify and recover when the main loop hits errors.

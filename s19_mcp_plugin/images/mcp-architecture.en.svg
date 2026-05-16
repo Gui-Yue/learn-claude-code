@@ -108,5 +108,5 @@
 
   <!-- ===== Final note ===== -->
   <rect x="30" y="430" width="700" height="22" rx="4" fill="#fff1f2" stroke="#dc2626" stroke-width="1"/>
-  <text x="380" y="444" fill="#991b1b" font-size="9" font-weight="600" text-anchor="middle">s19 is the final chapter. 19 mechanisms all hook onto the same while True loop — the loop itself, unchanged.</text>
+  <text x="380" y="444" fill="#991b1b" font-size="9" font-weight="600" text-anchor="middle">Next: s20 combines tools, permissions, teams, worktrees, MCP, and more into one while True loop.</text>
 </svg>

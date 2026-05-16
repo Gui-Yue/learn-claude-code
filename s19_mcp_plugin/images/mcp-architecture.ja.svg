@@ -108,5 +108,5 @@
 
   <!-- ===== Final note ===== -->
   <rect x="30" y="430" width="700" height="22" rx="4" fill="#fff1f2" stroke="#dc2626" stroke-width="1"/>
-  <text x="380" y="444" fill="#991b1b" font-size="9" font-weight="600" text-anchor="middle">s19 は最終章。19 の仕組みが全て同じ while True ループに接続 — ループそのものは変わっていない。</text>
+  <text x="380" y="444" fill="#991b1b" font-size="9" font-weight="600" text-anchor="middle">次の s20：tools、permissions、teams、worktree、MCP などを 1 つの while True ループに統合。</text>
 </svg>

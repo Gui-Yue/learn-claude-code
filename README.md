@@ -242,7 +242,6 @@ Every lesson layers one harness mechanism on top of this loop -- the loop itself
 | [s18](./s18_worktree_isolation/) | Worktree Isolation | `WorktreeRecord` / task-directory binding |
 | [s19](./s19_mcp_plugin/) | MCP Plugin | multi-transport / channel routing / tool pool merge |
 | [s20](./s20_comprehensive/) | Comprehensive Agent | all mechanisms around one loop |
-| [s_full](./s_full/) | Capstone | all mechanisms from s01-s19 merged |
 
 ---
 
@@ -294,7 +293,6 @@ learn-claude-code/
   ...
   s19_mcp_plugin/
   s20_comprehensive/       # endpoint chapter
-  s_full/                  # legacy capstone
   agents/                  # flat copies for quick python agents/sXX.py
   skills/                  # skill files used by s07
   docs/                    # legacy online docs (archived)
@@ -310,7 +308,7 @@ After 20 lessons, you understand harness engineering from the inside out. Two pa
 
 ### Kode Agent CLI -- Open-Source Coding Agent CLI
 
-> `npm i -g @anthropic-ai/kode`
+> `npm i -g @shareai-lab/kode`
 
 Skill and LSP support, Windows compatible, works with GLM / MiniMax / DeepSeek and other open models. Install and go.
 

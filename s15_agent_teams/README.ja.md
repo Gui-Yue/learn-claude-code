@@ -2,7 +2,7 @@
 
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-s01 → ... → s13 → s14 → `s15` → [s16](../s16_team_protocols/) → s17 → s18 → s19
+s01 → ... → s13 → s14 → `s15` → [s16](../s16_team_protocols/) → s17 → s18 → s19 → s20
 > *"一人では無理、チームを組もう"* — ファイル受信箱 + チームメイトスレッド。
 >
 > **Harness 層**: チーム — マルチ Agent 協調、メッセージバス。

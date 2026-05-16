@@ -2,7 +2,7 @@
 
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-s01 → ... → s14 → s15 → `s16` → [s17](../s17_autonomous_agents/) → s18 → s19
+s01 → ... → s14 → s15 → `s16` → [s17](../s17_autonomous_agents/) → s18 → s19 → s20
 > *"チームメイト間には取り決めが必要"* — request-response パターンが全てのネゴシエーションを駆動。
 >
 > **Harness 層**: プロトコル — Agent 間の構造化ハンドシェイク。

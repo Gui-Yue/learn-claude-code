@@ -108,5 +108,5 @@
 
   <!-- ===== Final note ===== -->
   <rect x="30" y="430" width="700" height="22" rx="4" fill="#fff1f2" stroke="#dc2626" stroke-width="1"/>
-  <text x="380" y="444" fill="#991b1b" font-size="9" font-weight="600" text-anchor="middle">s19 是最终章。19 个机制全部挂在同一个 while True 循环上——循环本身，从未改变。</text>
+  <text x="380" y="444" fill="#991b1b" font-size="9" font-weight="600" text-anchor="middle">下一章 s20：把工具、权限、团队、worktree、MCP 等机制合回同一个 while True 循环。</text>
 </svg>
