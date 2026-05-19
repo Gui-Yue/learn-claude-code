@@ -83,15 +83,14 @@ TOOL_HANDLERS["todo_write"] = run_todo_write
 
 ```python
 if rounds_since_todo >= 3 and messages:
-    last = messages[-1]
-    if last["role"] == "user" and isinstance(last.get("content"), list):
-        last["content"].insert(0, {
-            "type": "text",
-            "text": "<reminder>Update your todos.</reminder>",
-        })
+    messages.append({
+        "role": "user",
+        "content": "<reminder>Update your todos.</reminder>",
+    })
+    rounds_since_todo = 0
 ```
 
-Agent 收到任务后的典型流程：先调 `todo_write` 列出所有步骤（全 `pending`）→ 做一个步骤，改成 `in_progress` → 做完改成 `completed` → 看下一个 `pending` → 继续。3 轮不更新时，reminder 会提醒它回头更新 TODO 状态。
+Agent 收到任务后的典型流程：先调 `todo_write` 列出所有步骤（全 `pending`）→ 做一个步骤，改成 `in_progress` → 做完改成 `completed` → 看下一个 `pending` → 继续。连续 3 轮没有调用 `todo_write` 时，循环会在下一次 LLM 调用前追加一条 reminder。
 
 **关键洞察**：todo_write 不给 Agent 增加任何**执行能力**。它增加的是**规划能力**。
 
@@ -117,11 +116,11 @@ python s05_todo_write/code.py
 
 试试这些 prompt：
 
-1. `Refactor the file hello.py: add type hints, docstrings, and a main guard`（先列 3 步再执行）
-2. `Create a Python package with __init__.py, utils.py, and tests/test_utils.py`
-3. `Review all Python files and fix any style issues`
+1. `Refactor s05_todo_write/example/hello.py: add type hints, docstrings, and a main guard`（先列 3 步再执行）
+2. `Create a Python package under s05_todo_write/example/demo_pkg with __init__.py, utils.py, and tests/test_utils.py`
+3. `Review Python files under s05_todo_write/example and fix any style issues`
 
-观察重点：Agent 先调了 `todo_write` 吗？它列了几个步骤？执行过程中有没有回头更新 TODO 状态？连续 3 轮不更新时是否出现了 nag reminder？
+观察重点：第一次工具调用是不是 `todo_write`？TODO 列了几步？执行过程中状态有没有从 `pending` 变成 `in_progress` / `completed`？
 
 ---
 

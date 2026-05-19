@@ -146,14 +146,16 @@ def get_task(task_id: str) -> str:
     return json.dumps(asdict(task), indent=2)
 ```
 
-### 状态机: 两条边
+### 状态机: 两个动作，三个状态
 
 ```
 pending ──claim──→ in_progress ──complete──→ completed
 ```
 
-- **claim**: `pending` → `in_progress`。设置 owner，开始工作。
-- **complete**: `in_progress` → `completed`。解锁下游。
+这里的 `claim` / `complete` 是动作，`pending` / `in_progress` / `completed` 是状态：
+
+- **claim_task**: `pending` → `in_progress`。设置 owner，开始工作。
+- **complete_task**: `in_progress` → `completed`。把任务标记为完成，并解锁下游。
 
 CC 没有 `in_progress → pending` 的 release 路径。如果 teammate 终止或 shutdown，CC 会把它未完成的任务 unassign（清除 owner），并将 status 重置为 `pending`，方便其他 agent 重新认领。教学版省略了这一恢复路径。
 

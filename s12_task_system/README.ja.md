@@ -146,14 +146,16 @@ def get_task(task_id: str) -> str:
     return json.dumps(asdict(task), indent=2)
 ```
 
-### 状態マシン: 2 つの遷移
+### 状態マシン: 2 つのアクション、3 つの状態
 
 ```
 pending ──claim──→ in_progress ──complete──→ completed
 ```
 
-- **claim**: `pending` → `in_progress`。owner を設定、作業開始。
-- **complete**: `in_progress` → `completed`。下流をアンロック。
+ここで `claim` / `complete` はアクション、`pending` / `in_progress` / `completed` は状態：
+
+- **claim_task**: `pending` → `in_progress`。owner を設定し、作業を開始。
+- **complete_task**: `in_progress` → `completed`。タスクを完了済みにし、下流をアンロック。
 
 CC には `in_progress → pending` の release パスがない。teammate が終了または shutdown した場合、CC は未完了タスクの owner をクリアし、status を `pending` にリセットし、他の agent が再認識できるようにする。教学版はこの復旧パスを省略。
 

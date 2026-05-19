@@ -123,9 +123,9 @@ python s06_subagent/code.py
 
 1. `Use a subtask to find what testing framework this project uses`（子 Agent 去读文件，主 Agent 只收结论）
 2. `Delegate: read all .py files in agents/ and summarize what each one does`
-3. `Use a task to create a new module, then verify it from here`
+3. `Use a task to create s06_subagent/example/string_tools.py with a slugify(text: str) function, then verify it from the parent agent`
 
-观察重点：Agent 会 spawn 子 Agent 去读文件吗？子 Agent 的中间过程是否出现在主对话中？最后返回的结论包含子 Agent 读的那些文件内容吗？
+观察重点：是否出现 `[Subagent spawned]` / `[Subagent done]`？子 Agent 的工具调用是否以 `[sub] ...` 输出？主 Agent 最后是否只继续处理子 Agent 返回的摘要？
 
 ---
 

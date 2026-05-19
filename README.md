@@ -159,6 +159,51 @@ Every lesson layers one harness mechanism on top of this loop -- the loop itself
 
 ---
 
+## Version Status
+
+This repository currently contains two tutorial tracks:
+
+- **Current track: root-level `s01-s20`**
+  The root-level `s01_*` ... `s20_*` folders are the new canonical version. Each chapter contains a full narrative README, translations, runnable `code.py`, and diagrams where needed.
+- **Legacy transition track: `docs/`, `agents/`, and the current `web/` app**
+  These still preserve the older 12-lesson version. They are kept temporarily for existing readers, old links, and the web platform while the new 20-lesson track settles.
+
+If you are starting now, read the root-level `s01_agent_loop/` through `s20_comprehensive/` chapters. If you are following an older link or using the current web app, you are likely reading the legacy 12-lesson track. The legacy and current chapter numbers do not always match, so avoid mixing chapter numbers across tracks.
+
+### Legacy-to-Current Mapping
+
+| Legacy 12-lesson track | Current 20-lesson track | Topic |
+|---|---|---|
+| old s01 | new s01 | Agent Loop |
+| old s02 | new s02 | Tool Use |
+| old s03 | new s05 | TodoWrite |
+| old s04 | new s06 | Subagent |
+| old s05 | new s07 | Skill Loading |
+| old s06 | new s08 | Context Compact |
+| old s07 | new s12 | Task System |
+| old s08 | new s13 | Background Tasks |
+| old s09 | new s15 | Agent Teams |
+| old s10 | new s16 | Team Protocols |
+| old s11 | new s17 | Autonomous Agents |
+| old s12 | new s18 | Worktree Isolation |
+| new only | s03, s04, s09, s10, s11, s14, s19, s20 | Permission, Hooks, Memory, System Prompt, Error Recovery, Cron, MCP, Comprehensive Agent |
+
+---
+
+## Scope
+
+This repository is a 0-to-1 harness engineering learning project: it teaches how to build the working environment around an agent model. To keep the learning path clear, some production mechanisms are intentionally simplified or omitted:
+
+- Full event / hook bus behavior, such as `PreToolUse`, `SessionStart/End`, and `ConfigChange`.
+  The teaching code uses minimal lifecycle events where needed.
+- Rule-based permission governance and full trust workflows.
+- Session lifecycle controls such as resume/fork, plus more complete worktree lifecycle handling.
+- Full MCP runtime details such as transport, OAuth, resource subscription, and polling.
+
+The JSONL mailbox protocol in this repository is a teaching implementation, not a claim about any specific production internal implementation.
+
+---
+
 ## 20 Progressive Lessons
 
 **Each lesson adds one harness mechanism. Each mechanism has a motto.**
@@ -167,15 +212,15 @@ Every lesson layers one harness mechanism on top of this loop -- the loop itself
 >
 > **s02** &nbsp; *"Adding a tool means adding one handler"* &mdash; the loop stays untouched; new tools register into the dispatch map
 >
-> **s03** &nbsp; *"Set boundaries first, then grant freedom"* &mdash; the permission pipeline decides which operations need approval
+> **s03** &nbsp; *"Set boundaries first, then grant freedom"* &mdash; check what can run, what must stop, and what needs approval
 >
-> **s04** &nbsp; *"Hook around the loop, never rewrite the loop"* &mdash; hooks inject extension logic before and after tool execution
+> **s04** &nbsp; *"Hook around the loop, never rewrite the loop"* &mdash; add extension points without changing the main loop
 >
 > **s05** &nbsp; *"An agent without a plan drifts"* &mdash; list the steps before starting; completion rate doubles
 >
-> **s06** &nbsp; *"Big tasks split small, each subtask gets clean context"* &mdash; subagents use a fresh messages[], keeping the main conversation clean
+> **s06** &nbsp; *"Big tasks split small, each subtask gets clean context"* &mdash; subagents do the side work and bring back only the result
 >
-> **s07** &nbsp; *"Load knowledge on demand, not upfront"* &mdash; inject via tool_result, not the system prompt
+> **s07** &nbsp; *"Load knowledge on demand, not upfront"* &mdash; list skills first, expand them only when needed
 >
 > **s08** &nbsp; *"Context always fills up -- have a way to make room"* &mdash; multi-layer compaction strategies buy you infinite sessions
 >
@@ -183,38 +228,74 @@ Every lesson layers one harness mechanism on top of this loop -- the loop itself
 >
 > **s10** &nbsp; *"Prompts are assembled at runtime, not hardcoded"* &mdash; section-based concatenation, loaded on demand
 >
-> **s11** &nbsp; *"Errors aren't the end, they're the start of a retry"* &mdash; escalate tokens, compact context, switch models
+> **s11** &nbsp; *"Errors aren't the end, they're the start of a retry"* &mdash; retry, make room, or take another path when things fail
 >
 > **s12** &nbsp; *"Big goals break into small tasks, ordered, persisted to disk"* &mdash; a file-backed task graph that lays the groundwork for multi-agent coordination
 >
 > **s13** &nbsp; *"Slow ops go background, agent keeps thinking"* &mdash; background threads run commands; notifications inject on completion
 >
-> **s14** &nbsp; *"Fire on schedule, no human kick needed"* &mdash; cron scheduling, durable or session-scoped
+> **s14** &nbsp; *"Fire on schedule, no human kick needed"* &mdash; trigger tasks automatically by time
 >
 > **s15** &nbsp; *"Too big for one agent -- delegate to teammates"* &mdash; persistent teammates + async mailboxes
 >
-> **s16** &nbsp; *"Teammates need shared communication rules"* &mdash; one request-response pattern drives all negotiation
+> **s16** &nbsp; *"Teammates need shared communication rules"* &mdash; use a fixed request-reply format for coordination
 >
 > **s17** &nbsp; *"Teammates check the board, claim work themselves"* &mdash; no leader assigning one by one; self-organizing
 >
 > **s18** &nbsp; *"Each works in its own directory, no interference"* &mdash; tasks own goals, worktrees own directories, bound by ID
 >
-> **s19** &nbsp; *"Not enough capability? Plug in more via MCP"* &mdash; multi-transport, channel routing, tool pool merging
+> **s19** &nbsp; *"Not enough capability? Plug in more via MCP"* &mdash; connect external tools into the same tool pool
 >
 > **s20** &nbsp; *"Many mechanisms, one loop"* &mdash; all previous mechanisms return to one complete harness
 
 ---
 
-## Six Stages
+## Learning Path
 
-| Stage | Chapters | What you are building |
-|---|---|---|
-| **Tool pipeline** | `s01-s04` | loop → tool dispatch → permission pipeline → hook extensions |
-| **Single-agent capability** | `s05-s08` | planning → subagent → skill loading → context compaction |
-| **Knowledge and resilience** | `s09-s11` | memory → prompt assembly → error recovery |
-| **Durable work** | `s12-s14` | task graph → background execution → scheduled triggers |
-| **Multi-agent platform** | `s15-s19` | teams → protocols → autonomy → worktree isolation → MCP |
-| **Complete harness** | `s20` | full agent loop with all mechanisms assembled |
+Main line: act → handle complex work → remember and recover → run long tasks → collaborate → extend and assemble.
+
+```mermaid
+flowchart TD
+    %% Card styles
+    classDef stage1 fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1,rx:12,ry:12,text-align:left
+    classDef stage2 fill:#E8F5E9,stroke:#388E3C,stroke-width:2px,color:#1B5E20,rx:12,ry:12,text-align:left
+    classDef stage3 fill:#FFF3E0,stroke:#F57C00,stroke-width:2px,color:#E65100,rx:12,ry:12,text-align:left
+    classDef stage4 fill:#FCE4EC,stroke:#C2185b,stroke-width:2px,color:#880E4F,rx:12,ry:12,text-align:left
+    classDef stage5 fill:#F3E5F5,stroke:#7B1FA2,stroke-width:2px,color:#4A148C,rx:12,ry:12,text-align:left
+    classDef stage6 fill:#E0F7FA,stroke:#0097A7,stroke-width:2px,color:#006064,rx:12,ry:12,text-align:left
+
+    %% Group style
+    classDef groupBox fill:#F8F9FA,stroke:#CED4DA,stroke-width:2px,stroke-dasharray: 5 5,rx:15,ry:15,color:#495057
+
+    %% Layer 1: stages 1-3
+    subgraph Phase1 ["🌱 Stages 1-3: Core capabilities (simple to complex)"]
+        direction LR
+        S1["<b>1. Let the Agent act</b><br/>━━━━━━━━━━━━━<br/><b>s01 Agent Loop</b><br/>└─ one loop + bash<br/><br/><b>s02 Tool Use</b><br/>└─ one tool to many tools<br/><br/><b>s03 Permission</b><br/>└─ decide what can run<br/><br/><b>s04 Hooks</b><br/>└─ extension points around tools"]:::stage1
+
+        S2["<b>2. Handle complex work</b><br/>━━━━━━━━━━━━━<br/><b>s05 TodoWrite</b><br/>└─ plan first, then execute<br/><br/><b>s06 Subagent</b><br/>└─ side work, result back<br/><br/><b>s07 Skill Loading</b><br/>└─ expand skills on demand<br/><br/><b>s08 Context Compact</b><br/>└─ make room in long context"]:::stage2
+
+        S3["<b>3. Remember and recover</b><br/>━━━━━━━━━━━━━<br/><b>s09 Memory</b><br/>└─ remember what matters<br/><br/><b>s10 System Prompt</b><br/>└─ assemble at runtime<br/><br/><b>s11 Error Recovery</b><br/>└─ retry or change path"]:::stage3
+
+        S1 ==> S2 ==> S3
+    end
+
+    %% Layer 2: stages 4-6
+    subgraph Phase2 ["🚀 Stages 4-6: Advanced capabilities (long-running, collaboration, integration)"]
+        direction LR
+        S4["<b>4. Run long tasks</b><br/>━━━━━━━━━━━━━<br/><b>s12 Task System</b><br/>└─ persist tasks and deps<br/><br/><b>s13 Background Tasks</b><br/>└─ send slow work background<br/><br/><b>s14 Cron Scheduler</b><br/>└─ trigger by time"]:::stage4
+
+        S5["<b>5. Coordinate many Agents</b><br/>━━━━━━━━━━━━━<br/><b>s15 Agent Teams</b><br/>└─ teammates + mailboxes<br/><br/><b>s16 Team Protocols</b><br/>└─ fixed request-reply format<br/><br/><b>s17 Autonomous Agents</b><br/>└─ claim work from the board<br/><br/><b>s18 Worktree Isolation</b><br/>└─ separate directories"]:::stage5
+
+        S6["<b>6. Extend and assemble</b><br/>━━━━━━━━━━━━━<br/><b>s19 MCP Plugin</b><br/>└─ external tools, one pool<br/><br/><b>s20 Comprehensive Agent</b><br/>└─ all mechanisms, one loop"]:::stage6
+
+        S4 ==> S5 ==> S6
+    end
+
+    %% Connect the two layers
+    Phase1 ===> Phase2
+
+    class Phase1,Phase2 groupBox
+```
 
 ---
 
@@ -266,6 +347,8 @@ Read from s01 through s20 in order. Each chapter assumes you've read the previou
 
 ## Quick Start
 
+### Current 20-Lesson Track
+
 ```sh
 git clone https://github.com/shareAI-lab/learn-claude-code
 cd learn-claude-code
@@ -275,6 +358,22 @@ cp .env.example .env   # configure ANTHROPIC_API_KEY
 python s01_agent_loop/code.py        # Start here -- one loop + bash
 python s08_context_compact/code.py   # Context compaction (complex)
 python s20_comprehensive/code.py     # Endpoint: all mechanisms in one loop
+```
+
+### Legacy 12-Lesson Track
+
+```sh
+python agents/s01_agent_loop.py
+python agents/s12_worktree_task_isolation.py
+python agents/s_full.py
+```
+
+### Web Platform
+
+The current web app still renders the legacy `docs/` s01-s12 track. Use the root-level folders for the new s01-s20 track.
+
+```sh
+cd web && npm install && npm run dev   # http://localhost:3000
 ```
 
 ---
@@ -293,10 +392,10 @@ learn-claude-code/
   ...
   s19_mcp_plugin/
   s20_comprehensive/       # endpoint chapter
-  agents/                  # flat copies for quick python agents/sXX.py
+  agents/                  # legacy 12 runnable copies + s_full.py
   skills/                  # skill files used by s07
-  docs/                    # legacy online docs (archived)
-  web/                     # web teaching platform
+  docs/                    # legacy 12-lesson docs, kept during transition
+  web/                     # currently renders the legacy docs/ track
   tests/
 ```
 

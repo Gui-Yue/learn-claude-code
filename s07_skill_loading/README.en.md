@@ -125,11 +125,11 @@ python s07_skill_loading/code.py
 
 Try these prompts:
 
-1. `What skills are available?` (should answer directly from the SYSTEM prompt catalog, no tool call)
-2. `Load the code-review skill and follow its instructions` (should call load_skill)
+1. `What skills are available?`
+2. `Load the code-review skill and follow its instructions`
 3. `I need to do a code review -- load the relevant skill first`
 
-What to watch for: Does the Agent know which skills are available directly from the SYSTEM catalog? Does it proactively call `load_skill` when it needs specific specs? Does the full skill content appear in the system prompt?
+What to watch for: Does the Agent know available skills from the SYSTEM catalog? Does `[HOOK] load_skill` appear when full instructions are needed? Does the answer use the loaded skill's instructions?
 
 ---
 

@@ -39,7 +39,7 @@
   <!-- LLM -->
   <rect x="200" y="106" width="110" height="48" rx="8" fill="#fff" stroke="#2563eb" stroke-width="1.5"/>
   <text x="255" y="128" fill="#1e3a5f" font-size="13" font-weight="700" text-anchor="middle">LLM</text>
-  <text x="255" y="146" fill="#64748b" font-size="9" text-anchor="middle">stop_reason?</text>
+  <text x="255" y="146" fill="#64748b" font-size="9" text-anchor="middle">stop_reason=tool_use?</text>
 
   <!-- No → 戻る -->
   <line x1="255" y1="154" x2="255" y2="178" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)"/>

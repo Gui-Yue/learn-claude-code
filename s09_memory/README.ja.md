@@ -146,9 +146,11 @@ def consolidate_memories():
 
 CC はこのプロセスを **Dream** と呼び、実際には 4 層のゲートがある：時間間隔、スキャンスロットル、セッション数、ファイルロック。教学版はファイル数閾値に簡略化。
 
-### 境界：Memory は何ではないか
+### Memory に保存するもの
 
-Memory は todo リストではない（それは TaskCreate）、plan ではない（それは plan mode）、transcript ではない（それは `.transcripts/` の完全な記録）、session memory でもない。区別：Memory はセッション間で保持する情報を扱い、session memory は単一セッション内で compact を越えたコンテキストの連続性を扱う。
+Memory はセッションを越えて有用な情報を保存する：ユーザーの好み、繰り返し出るフィードバック、プロジェクト背景、よく使う入口、調査の手がかりなど。「あとでまた使うもの」を対象にし、インデックス + オンデマンド読み込みで現在の会話に戻す。
+
+session memory は 1 つのセッション内の連続性を扱う：compact 後も現在の会話に残すべき文脈を保持する。両者は役割が分かれている。Memory は長期知識を扱い、session memory は現在のセッションを compact 越しにつなぐ。
 
 ---
 

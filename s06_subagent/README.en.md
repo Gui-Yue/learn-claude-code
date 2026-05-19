@@ -119,9 +119,9 @@ Try these prompts:
 
 1. `Use a subtask to find what testing framework this project uses` (sub-Agent reads files, main Agent receives only the conclusion)
 2. `Delegate: read all .py files in agents/ and summarize what each one does`
-3. `Use a task to create a new module, then verify it from here`
+3. `Use a task to create s06_subagent/example/string_tools.py with a slugify(text: str) function, then verify it from the parent agent`
 
-What to watch for: Does the Agent spawn a sub-Agent to read files? Do the sub-Agent's intermediate steps appear in the main conversation? Does the final conclusion include the file contents that the sub-Agent read?
+What to watch for: Do `[Subagent spawned]` / `[Subagent done]` appear? Do sub-Agent tool calls print as `[sub] ...`? Does the parent Agent continue with only the summary returned by the sub-Agent?
 
 ---
 

@@ -146,9 +146,11 @@ def consolidate_memories():
 
 CC calls this process **Dream**, with four gates in practice: time interval, scan throttle, session count, file lock. The teaching version simplifies to a file-count threshold.
 
-### Boundaries: What Memory Is Not
+### What Memory Stores
 
-Memory is not a todo list (that's TaskCreate), not a plan (that's plan mode), not a transcript (that's the full record in `.transcripts/`), and not session memory. Distinction: Memory handles information persisted across sessions; session memory handles context continuity across compactions within a single session.
+Memory stores information that remains useful across sessions: user preferences, recurring feedback, project background, common entry points, and investigation clues. It focuses on "what will be useful later" and brings that information back through an index plus on-demand loading.
+
+Session memory focuses on continuity inside one session: what context should survive after compaction. The two work together: Memory handles long-term knowledge; session memory handles the current session across compaction.
 
 ---
 

@@ -166,15 +166,15 @@ Claude Code = 一个 agent loop
 >
 > **s02** &nbsp; *"加一个工具, 只加一个 handler"* &mdash; 循环不用动, 新工具注册进 dispatch map 就行
 >
-> **s03** &nbsp; *"先划边界, 再给自由"* &mdash; 权限管线决定哪些操作需要审批
+> **s03** &nbsp; *"先划边界, 再给自由"* &mdash; 先判断操作能不能做，要不要问用户
 >
-> **s04** &nbsp; *"挂在循环上, 不写进循环里"* &mdash; 钩子在工具执行前后注入扩展逻辑
+> **s04** &nbsp; *"挂在循环上, 不写进循环里"* &mdash; 在工具前后留插口，不改主循环也能扩展
 >
 > **s05** &nbsp; *"没有计划的 agent 走哪算哪"* &mdash; 先列步骤再动手, 完成率翻倍
 >
-> **s06** &nbsp; *"大任务拆小, 每个小任务干净的上下文"* &mdash; Subagent 用独立 messages[], 不污染主对话
+> **s06** &nbsp; *"大任务拆小, 每个小任务干净的上下文"* &mdash; 子 Agent 自己干活，只把结果带回来
 >
-> **s07** &nbsp; *"用到时再加载, 别全塞 prompt 里"* &mdash; 通过 tool_result 注入, 不塞 system prompt
+> **s07** &nbsp; *"用到时再加载, 别全塞 prompt 里"* &mdash; 技能先列目录，用到时再展开
 >
 > **s08** &nbsp; *"上下文总会满, 要有办法腾地方"* &mdash; 四层压缩策略, 便宜的先跑贵的后跑
 >
@@ -182,23 +182,23 @@ Claude Code = 一个 agent loop
 >
 > **s10** &nbsp; *"prompt 是组装出来的, 不是写死的"* &mdash; 分段 + 按需拼接
 >
-> **s11** &nbsp; *"错误不是终点, 是重试的起点"* &mdash; 升级 token、压缩上下文、切换模型
+> **s11** &nbsp; *"错误不是终点, 是重试的起点"* &mdash; 出错时会重试、腾空间、换路子
 >
 > **s12** &nbsp; *"大目标拆成小任务, 排好序, 持久化"* &mdash; 文件持久化的任务图, 多 agent 协作的基础
 >
 > **s13** &nbsp; *"慢操作丢后台, agent 继续思考"* &mdash; 后台线程跑命令, 完成后注入通知
 >
-> **s14** &nbsp; *"定时触发, 不需要人推"* &mdash; cron 调度, 持久化或会话级
+> **s14** &nbsp; *"定时触发, 不需要人推"* &mdash; 按时间自动触发任务
 >
 > **s15** &nbsp; *"一个搞不定, 组队来"* &mdash; 持久化队友 + 异步邮箱
 >
-> **s16** &nbsp; *"队友之间要有约定"* &mdash; 一个 request-response 模式驱动所有协商
+> **s16** &nbsp; *"队友之间要有约定"* &mdash; 用固定的请求-回复格式沟通
 >
 > **s17** &nbsp; *"队友自己看板, 有活就认领"* &mdash; 不需要领导逐个分配, 自组织
 >
 > **s18** &nbsp; *"各干各的目录, 互不干扰"* &mdash; 任务管目标, worktree 管目录, 按 ID 绑定
 >
-> **s19** &nbsp; *"能力不够? 插上 MCP"* &mdash; 多传输、通道路由、工具池合并
+> **s19** &nbsp; *"能力不够? 插上 MCP"* &mdash; 把外部工具接进同一个工具池
 >
 > **s20** &nbsp; *"机制很多，循环一个"* &mdash; 前面所有机制回到一个完整 harness
 
@@ -233,6 +233,35 @@ def agent_loop(messages):
 
 每个课程在这个循环之上叠加一个 harness 机制 -- 循环本身始终不变。循环属于 agent。机制属于 harness。
 
+## 版本说明
+
+本仓库现在同时保留两条教程线：
+
+- **新版主线：根目录 `s01-s20`**
+  根目录下的 `s01_*` 到 `s20_*` 是新的主版本，也是当前推荐阅读路径。每章包含完整叙事 README、英文/日文译本、可运行的 `code.py`，以及必要的图示。
+- **旧版过渡：`docs/`、`agents/`、当前 `web/`**
+  这些仍保留旧 12 章体系，暂时用于已有读者、旧链接和 Web 平台过渡。
+
+新读者请从根目录 `s01_agent_loop/` 读到 `s20_comprehensive/`。如果你是从旧链接或当前 Web 平台进入，大概率看到的是旧 12 章版本。旧版章节号和新版不完全一致，不要混用章节号。
+
+### 旧版到新版的对应关系
+
+| 旧 12 章版本 | 新 20 章版本 | 主题 |
+|---|---|---|
+| 旧 s01 | 新 s01 | Agent Loop |
+| 旧 s02 | 新 s02 | Tool Use |
+| 旧 s03 | 新 s05 | TodoWrite |
+| 旧 s04 | 新 s06 | Subagent |
+| 旧 s05 | 新 s07 | Skill Loading |
+| 旧 s06 | 新 s08 | Context Compact |
+| 旧 s07 | 新 s12 | Task System |
+| 旧 s08 | 新 s13 | Background Tasks |
+| 旧 s09 | 新 s15 | Agent Teams |
+| 旧 s10 | 新 s16 | Team Protocols |
+| 旧 s11 | 新 s17 | Autonomous Agents |
+| 旧 s12 | 新 s18 | Worktree Isolation |
+| 新版新增 | s03、s04、s09、s10、s11、s14、s19、s20 | Permission、Hooks、Memory、System Prompt、Error Recovery、Cron、MCP、Comprehensive Agent |
+
 ## 范围说明 (重要)
 
 本仓库是一个 0->1 的 harness 工程学习项目 -- 构建围绕 agent 模型的工作环境。
@@ -248,6 +277,8 @@ def agent_loop(messages):
 
 ## 快速开始
 
+### 新版 20 章主线
+
 ```sh
 git clone https://github.com/shareAI-lab/learn-claude-code
 cd learn-claude-code
@@ -259,24 +290,69 @@ python s08_context_compact/code.py    # 上下文压缩（复杂章）
 python s20_comprehensive/code.py      # 终点章: 全部机制归到一个循环
 ```
 
+### 旧版 12 章过渡线
+
+```sh
+python agents/s01_agent_loop.py
+python agents/s12_worktree_task_isolation.py
+python agents/s_full.py
+```
+
 ### Web 平台
 
-交互式可视化、分步动画、源码查看器, 以及每个课程的文档。
+当前 Web 平台仍读取 `docs/` 中的旧 12 章内容。新版 20 章请直接阅读根目录 `s01-s20`。
 
 ```sh
 cd web && npm install && npm run dev   # http://localhost:3000
 ```
 
-## 六个阶段
+## 学习路径
 
-| 阶段 | 章节 | 你在构建什么 |
-|---|---|---|
-| **工具管线** | `s01-s04` | loop → dispatch → permission → hooks |
-| **单 Agent 能力** | `s05-s08` | planning → subagent → skill → context compact |
-| **知识与韧性** | `s09-s11` | memory → prompt assembly → error recovery |
-| **持久化工作** | `s12-s14` | task graph → background → cron |
-| **多 Agent 平台** | `s15-s19` | teams → protocols → autonomy → worktree → MCP |
-| **完整 Harness** | `s20` | 全部机制归到一个 agent loop |
+主线：能动手 → 能做复杂任务 → 能记住和恢复 → 能长期运行 → 能协作 → 能扩展并合体
+
+```mermaid
+flowchart TD
+    %% 统一定义卡片样式：加入 text-align:left 保证列表不会居中乱飘
+    classDef stage1 fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1,rx:12,ry:12,text-align:left
+    classDef stage2 fill:#E8F5E9,stroke:#388E3C,stroke-width:2px,color:#1B5E20,rx:12,ry:12,text-align:left
+    classDef stage3 fill:#FFF3E0,stroke:#F57C00,stroke-width:2px,color:#E65100,rx:12,ry:12,text-align:left
+    classDef stage4 fill:#FCE4EC,stroke:#C2185b,stroke-width:2px,color:#880E4F,rx:12,ry:12,text-align:left
+    classDef stage5 fill:#F3E5F5,stroke:#7B1FA2,stroke-width:2px,color:#4A148C,rx:12,ry:12,text-align:left
+    classDef stage6 fill:#E0F7FA,stroke:#0097A7,stroke-width:2px,color:#006064,rx:12,ry:12,text-align:left
+    
+    %% 背景框样式
+    classDef groupBox fill:#F8F9FA,stroke:#CED4DA,stroke-width:2px,stroke-dasharray: 5 5,rx:15,ry:15,color:#495057
+    
+    %% 第一层：1-3阶段
+    subgraph Phase1 ["🌱 阶段 1-3：基础能力构建（从简单到复杂）"]
+        direction LR
+        S1["<b>第一阶段：让 Agent 能动手</b><br/>━━━━━━━━━━━━━<br/><b>s01 Agent Loop</b><br/>└─ 一个循环 + bash<br/><br/><b>s02 Tool Use</b><br/>└─ 单个到多个工具<br/><br/><b>s03 Permission</b><br/>└─ 判断能不能做<br/><br/><b>s04 Hooks</b><br/>└─ 工具前后留扩展插口"]:::stage1
+
+        S2["<b>第二阶段：做复杂任务</b><br/>━━━━━━━━━━━━━<br/><b>s05 TodoWrite</b><br/>└─ 先列计划，再执行<br/><br/><b>s06 Subagent</b><br/>└─ 子节点干活带回结果<br/><br/><b>s07 Skill Loading</b><br/>└─ 技能按需展开<br/><br/><b>s08 Context Compact</b><br/>└─ 长下文腾空间"]:::stage2
+
+        S3["<b>第三阶段：记住和恢复</b><br/>━━━━━━━━━━━━━<br/><b>s09 Memory</b><br/>└─ 该记记，该忘忘<br/><br/><b>s10 System Prompt</b><br/>└─ 运行时组装<br/><br/><b>s11 Error Recovery</b><br/>└─ 重试换路子"]:::stage3
+
+        S1 ==> S2 ==> S3
+    end
+
+    %% 第二层：4-6阶段
+    subgraph Phase2 ["🚀 阶段 4-6：高阶能力进化（长期、协作与融合）"]
+        direction LR
+        S4["<b>第四阶段：让任务长期运行</b><br/>━━━━━━━━━━━━━<br/><b>s12 Task System</b><br/>└─ 任务落盘记依赖<br/><br/><b>s13 Background Tasks</b><br/>└─ 慢操作丢后台<br/><br/><b>s14 Cron Scheduler</b><br/>└─ 按时自动触发"]:::stage4
+
+        S5["<b>第五阶段：让多个 Agent 协作</b><br/>━━━━━━━━━━━━━<br/><b>s15 Agent Teams</b><br/>└─ 队友 + 邮箱通信<br/><br/><b>s16 Team Protocols</b><br/>└─ 固定收发格式<br/><br/><b>s17 Autonomous Agents</b><br/>└─ 自己看板认领活<br/><br/><b>s18 Worktree Isolation</b><br/>└─ 隔离目录"]:::stage5
+
+        S6["<b>第六阶段：接外部能力合体</b><br/>━━━━━━━━━━━━━<br/><b>s19 MCP Plugin</b><br/>└─ 外部接进工具池<br/><br/><b>s20 Comprehensive Agent</b><br/>└─ 全机制回单循环"]:::stage6
+
+        S4 ==> S5 ==> S6
+    end
+
+    %% 将两个模块连接起来，形成 Z 字形阅读流
+    Phase1 ===> Phase2
+
+    %% 应用背景样式
+    class Phase1,Phase2 groupBox
+```
 
 ## 全部章节
 
@@ -317,10 +393,10 @@ learn-claude-code/
   ...
   s19_mcp_plugin/
   s20_comprehensive/       # 终点章
-  agents/                  # 扁平副本，方便 python agents/sXX.py 快速运行
+  agents/                  # 旧 12 章可运行副本 + s_full.py
   skills/                  # s07 使用的 skill 文件
-  docs/                    # 旧版线上文档（已归档）
-  web/                     # Web 教学平台
+  docs/                    # 旧 12 章文档，过渡期保留
+  web/                     # 当前仍基于 docs/ 旧版内容生成
   tests/
 ```
 

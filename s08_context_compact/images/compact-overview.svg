@@ -85,7 +85,7 @@
   <!-- ===== ③ LLM ===== -->
   <rect x="440" y="132" width="100" height="52" rx="8" fill="#f0f4ff" stroke="#2563eb" stroke-width="1.5"/>
   <text x="490" y="155" fill="#1e3a5f" font-size="14" font-weight="700" text-anchor="middle">LLM</text>
-  <text x="490" y="172" fill="#64748b" font-size="9" text-anchor="middle">stop_reason?</text>
+  <text x="490" y="172" fill="#64748b" font-size="9" text-anchor="middle">stop_reason=tool_use?</text>
 
   <!-- LLM 否 → 返回 -->
   <line x1="490" y1="184" x2="490" y2="278" stroke="#16a34a" stroke-width="2" marker-end="url(#arrow-green)"/>
@@ -123,7 +123,7 @@
   <rect x="50" y="390" width="720" height="116" rx="6" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
 
   <rect x="70" y="404" width="16" height="12" rx="3" fill="#f0f4ff" stroke="#2563eb" stroke-width="1"/>
-  <text x="94" y="414" fill="#334155" font-size="10">s07 保留：循环、钩子、技能加载、子 Agent</text>
+  <text x="94" y="414" fill="#334155" font-size="10">s07 保留：循环、hook、技能加载、子 Agent</text>
 
   <rect x="70" y="426" width="16" height="12" rx="3" fill="#fde68a" stroke="#d97706" stroke-width="1"/>
   <text x="94" y="436" fill="#334155" font-size="10">① 每轮自动：L3→L1→L2 在每次 LLM 调用前无条件执行，0 API</text>

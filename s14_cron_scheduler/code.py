@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-s14: Cron Scheduler — independent daemon thread polling + cron_queue injection.
+s14: Cron Scheduler — independent daemon thread + queue processor.
 
 Run:  python s14_cron_scheduler/code.py
 Need: pip install anthropic python-dotenv + .env with ANTHROPIC_API_KEY
@@ -10,17 +10,16 @@ Changes from s13:
   - cron_matches: 5-field cron expression matching with DOM/DOW OR semantics
   - schedule_job / cancel_job: register/remove cron jobs (with validation)
   - cron_scheduler_loop: independent daemon thread, polls every 1s
-  - cron_queue: thread-safe queue, scheduler writes, agent_loop consumes
+  - cron_queue: thread-safe queue, scheduler writes, queue processor delivers
+  - queue_processor_loop: auto-runs agent_loop when cron_queue has work
   - Durable storage: .scheduled_tasks.json (survives restart)
   - 3 new tools: schedule_cron, list_crons, cancel_cron
 
-Three layers:
+Four layers:
   1. Scheduler: daemon thread checks time → fires matching jobs
   2. Queue: cron_queue decouples scheduler from agent loop
-  3. Consumer: agent_loop consumes queue when called
-
-Note: Teaching version consumes cron_queue only when agent_loop is called.
-Real CC uses a queue processor that auto-wakes the agent when items arrive.
+  3. Queue processor: wakes the agent when queued work exists and it is idle
+  4. Consumer: agent_loop consumes queued jobs and injects them into messages
 """
 
 import os, subprocess, json, time, random, threading
@@ -361,6 +360,7 @@ class CronJob:
 scheduled_jobs: dict[str, CronJob] = {}
 cron_queue: list[CronJob] = []
 cron_lock = threading.Lock()
+agent_lock = threading.Lock()
 _last_fired: dict[str, str] = {}  # job_id → "YYYY-MM-DD HH:MM"
 
 
@@ -550,6 +550,12 @@ def consume_cron_queue() -> list[CronJob]:
     return fired
 
 
+def has_cron_queue() -> bool:
+    """Return whether fired cron jobs are waiting to be delivered."""
+    with cron_lock:
+        return bool(cron_queue)
+
+
 # Load durable jobs on startup, then start scheduler thread
 load_durable_jobs()
 threading.Thread(target=cron_scheduler_loop, daemon=True).start()
@@ -674,13 +680,13 @@ def update_context(context: dict, messages: list) -> dict:
 
 # ── Agent Loop (simplified, focused on cron scheduler) ──
 # Teaching code keeps a basic agent loop. S11's full error recovery is omitted.
-# Cron queue is consumed when agent_loop is called; real CC auto-wakes via
-# queue processor (useQueueProcessor.ts) when items arrive.
+# cron_scheduler_loop produces work; queue_processor_loop wakes this loop when
+# queued work exists and no other agent turn is running.
 
-def agent_loop(messages: list, context: dict):
+def agent_loop(messages: list, context: dict) -> dict:
     system = get_system_prompt(context)
     while True:
-        # Layer 3: consume fired cron jobs → inject as messages
+        # Layer 4: consume fired cron jobs → inject as messages
         fired = consume_cron_queue()
         for job in fired:
             messages.append({"role": "user",
@@ -695,11 +701,11 @@ def agent_loop(messages: list, context: dict):
             messages.append({"role": "assistant", "content": [
                 {"type": "text",
                  "text": f"[Error] {type(e).__name__}: {e}"}]})
-            return
+            return context
 
         messages.append({"role": "assistant", "content": response.content})
         if response.stop_reason != "tool_use":
-            return
+            return context
 
         results = []
         for block in response.content:
@@ -732,11 +738,62 @@ def agent_loop(messages: list, context: dict):
         system = get_system_prompt(context)
 
 
+session_history: list = []
+session_context = update_context({}, [])
+
+
+def print_latest_assistant_text(messages: list):
+    """Print text blocks from the latest assistant message."""
+    if not messages:
+        return
+    msg = messages[-1]
+    if not isinstance(msg, dict) or msg.get("role") != "assistant":
+        return
+    content = msg.get("content", "")
+    if isinstance(content, str):
+        print(content)
+        return
+    for block in content:
+        if getattr(block, "type", None) == "text":
+            print(block.text)
+        elif isinstance(block, dict) and block.get("type") == "text":
+            print(block.get("text", ""))
+
+
+def run_agent_turn_locked(user_query: str | None = None):
+    """Run one agent turn. Caller must hold agent_lock."""
+    global session_context
+    if user_query is not None:
+        session_history.append({"role": "user", "content": user_query})
+    session_context = agent_loop(session_history, session_context)
+    session_context = update_context(session_context, session_history)
+    print_latest_assistant_text(session_history)
+    print()
+
+
+def queue_processor_loop():
+    """Auto-deliver fired cron jobs when the agent is idle."""
+    global session_context
+    while True:
+        time.sleep(0.2)
+        if not has_cron_queue():
+            continue
+        if not agent_lock.acquire(blocking=False):
+            continue
+        try:
+            if not has_cron_queue():
+                continue
+            print("\n  \033[35m[queue processor] delivering scheduled work\033[0m")
+            run_agent_turn_locked()
+        finally:
+            agent_lock.release()
+
+
 if __name__ == "__main__":
     print("s14: cron scheduler")
     print("Enter a question, press Enter to send. Type q to quit.\n")
-    history = []
-    context = update_context({}, [])
+    threading.Thread(target=queue_processor_loop, daemon=True).start()
+    print("  \033[35m[queue processor] started\033[0m")
     while True:
         try:
             query = input("\033[36ms14 >> \033[0m")
@@ -744,10 +801,5 @@ if __name__ == "__main__":
             break
         if query.strip().lower() in ("q", "exit", ""):
             break
-        history.append({"role": "user", "content": query})
-        agent_loop(history, context)
-        context = update_context(context, history)
-        for block in history[-1]["content"]:
-            if getattr(block, "type", None) == "text":
-                print(block.text)
-        print()
+        with agent_lock:
+            run_agent_turn_locked(query)

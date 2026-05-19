@@ -76,13 +76,16 @@
   <line x1="170" y1="212" x2="170" y2="248" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrow-green)"/>
   <line x1="380" y1="212" x2="380" y2="248" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrow-green)"/>
   <line x1="590" y1="212" x2="590" y2="248" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+  <text x="124" y="226" fill="#16a34a" font-size="9" font-weight="600">receive</text>
+  <text x="334" y="226" fill="#16a34a" font-size="9" font-weight="600">receive</text>
+  <text x="544" y="226" fill="#16a34a" font-size="9" font-weight="600">receive</text>
 
   <line x1="200" y1="248" x2="200" y2="212" stroke="#0891b2" stroke-width="1" stroke-dasharray="4,2" marker-end="url(#arrow-cyan)"/>
   <line x1="410" y1="248" x2="410" y2="212" stroke="#0891b2" stroke-width="1" stroke-dasharray="4,2" marker-end="url(#arrow-cyan)"/>
   <line x1="620" y1="248" x2="620" y2="212" stroke="#0891b2" stroke-width="1" stroke-dasharray="4,2" marker-end="url(#arrow-cyan)"/>
-  <text x="215" y="234" fill="#0891b2" font-size="7">send</text>
-  <text x="425" y="234" fill="#0891b2" font-size="7">send</text>
-  <text x="635" y="234" fill="#0891b2" font-size="7">send</text>
+  <text x="214" y="241" fill="#0891b2" font-size="9" font-weight="600">send</text>
+  <text x="424" y="241" fill="#0891b2" font-size="9" font-weight="600">send</text>
+  <text x="634" y="241" fill="#0891b2" font-size="9" font-weight="600">send</text>
 
   <rect x="60" y="248" width="220" height="66" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
   <text x="170" y="268" fill="#166534" font-size="10" font-weight="700" text-anchor="middle">Teammate: alice (Backend)</text>
@@ -101,7 +104,8 @@
 
   <!-- ===== Row 4: Permission bubbling (real CC detail) ===== -->
   <path d="M 60 360 L 10 360 L 10 195 L 60 195" fill="none" stroke="#d97706" stroke-width="1.5" marker-end="url(#arrow-amber)" stroke-dasharray="5,3"/>
-  <text x="22" y="258" fill="#d97706" font-size="7" font-weight="600" transform="rotate(-90 22 258)">permission_request ↑</text>
+  <rect x="20" y="318" width="126" height="18" rx="4" fill="#fffbeb" stroke="#f59e0b" stroke-width="1"/>
+  <text x="83" y="331" fill="#d97706" font-size="10" font-weight="700" text-anchor="middle">permission_request</text>
 
   <rect x="60" y="340" width="640" height="50" rx="6" fill="#fffbeb" stroke="#d97706" stroke-width="1.5"/>
   <text x="380" y="360" fill="#92400e" font-size="11" font-weight="700" text-anchor="middle">Permission Bubbling (real CC; omitted in teaching code)</text>

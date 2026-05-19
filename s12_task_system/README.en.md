@@ -146,14 +146,16 @@ def get_task(task_id: str) -> str:
     return json.dumps(asdict(task), indent=2)
 ```
 
-### State Machine: Two Edges
+### State Machine: Two Actions, Three States
 
 ```
 pending ──claim──→ in_progress ──complete──→ completed
 ```
 
-- **claim**: `pending` → `in_progress`. Sets owner, begins work.
-- **complete**: `in_progress` → `completed`. Unblocks downstream.
+Here `claim` / `complete` are actions, while `pending` / `in_progress` / `completed` are states:
+
+- **claim_task**: `pending` → `in_progress`. Sets owner, begins work.
+- **complete_task**: `in_progress` → `completed`. Marks the task done and unblocks downstream.
 
 CC has no `in_progress → pending` release path. If a teammate terminates or shuts down, CC unassigns its unfinished tasks (clears owner) and resets status to `pending`, allowing other agents to reclaim them. The teaching version omits this recovery path.
 

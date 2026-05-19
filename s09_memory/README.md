@@ -146,9 +146,11 @@ def consolidate_memories():
 
 CC 把这个过程叫 Dream，实际有四层门控：时间间隔、扫描节流、会话数、文件锁。教学版简化为文件数阈值。
 
-### 边界：Memory 不是什么
+### Memory 适合保存什么
 
-Memory 不是 todo list（那是 TaskCreate），不是 plan（那是 plan mode），不是 transcript（那是 `.transcripts/` 的完整记录），也不是 session memory。区分：Memory 处理跨会话保留的信息，session memory 处理单会话内跨 compact 的上下文连续性。
+Memory 保存跨会话仍然有用的信息：用户偏好、反复出现的反馈、项目背景、常用入口和排查线索。它关注“以后还会用到什么”，并通过索引 + 按需加载把这些信息带回当前对话。
+
+session memory 关注同一会话内的连续性：compact 之后，当前会话还需要保留哪些上下文。两者配合使用：Memory 管长期知识，session memory 管当前会话的压缩续接。
 
 ---
 

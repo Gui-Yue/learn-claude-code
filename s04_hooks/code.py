@@ -10,7 +10,7 @@ s04: Hooks — move extension logic out of the loop, onto hooks.
   └────────┬─────────┘
            ▼
   ┌────────────┐     ┌─────────────────────────────┐
-  │  messages  │────▶│  LLM (stop_reason?)         │
+  │  messages  │────▶│  LLM (stop_reason=tool_use?)│
   └────────────┘     │   No ──▶ Stop hooks ──▶ exit │
                      │   Yes ──▶ tool_use block ──┐ │
                      └────────────────────────────┘ │
@@ -164,7 +164,7 @@ def register_hook(event: str, callback):
 def trigger_hooks(event: str, *args):
     for callback in HOOKS[event]:
         result = callback(*args)
-        if result is not None:  # non-None return → abort
+        if result is not None:  # teaching shortcut: block this tool call
             return result
     return None
 

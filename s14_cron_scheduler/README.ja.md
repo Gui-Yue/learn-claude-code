@@ -21,7 +21,7 @@ s13 で Agent は遅い操作をバックグラウンドで実行できるよう
 
 ![Cron Scheduler Overview](images/cron-scheduler-overview.ja.svg)
 
-教学版は S13 の簡易タスクシステム、バックグラウンド実行、プロンプト組み立てを踏襲。スケジューラに集中するため、完全なエラーリカバリ、メモリ、スキルシステムは省略。追加：独立した cron スケジューラスレッド、daemon スレッドで動作、1 秒ごとにポーリング、時間が来たらタスクを `cron_queue` に投入。
+教学版は S13 の簡易タスクシステム、バックグラウンド実行、プロンプト組み立てを踏襲。スケジューラに集中するため、完全なエラーリカバリ、メモリ、スキルシステムは省略。追加：独立した cron スケジューラスレッド、1 秒ごとにポーリング、時間が来たらタスクを `cron_queue` に投入し、queue processor が Agent のアイドル時に自動配信。
 
 手動 vs スケジュール：
 
@@ -29,22 +29,23 @@ s13 で Agent は遅い操作をバックグラウンドで実行できるよう
 |---|---|---|
 | トリガー | ユーザー入力 | スケジューラスレッド |
 | トリガー時刻 | いつでも | cron 式で指定 |
-| 人の関与 | あり | なし（スケジューラが自動キュー投入） |
+| 人の関与 | あり | なし（スケジューラが自動キュー投入、アイドル時に自動配信） |
 | 永続性 | — | durable は再起動後も保持 |
 
 ---
 
 ## 仕組み
 
-### 3 層モデル
+### 4 層モデル
 
-cron スケジューリングは 3 層に分かれる：
+cron スケジューリングは 4 層に分かれる：
 
 1. **Scheduler**：daemon スレッド、1 秒ごとにポーリング、時刻が来たか判定
-2. **Queue**：`cron_queue`、スケジューラが書き込み、agent_loop が読み取り
-3. **Consumer**：agent_loop が呼び出された時にキューから消費、messages に注入
+2. **Queue**：`cron_queue`、スケジューラが発火済みタスクを書き込み
+3. **Queue Processor**：キューが空でなく Agent がアイドルなら、一回の agent_loop を開始
+4. **Consumer**：agent_loop がキューから消費、messages に注入
 
-教学版では、第 3 層は agent_loop が呼び出された時のみ実行される。ユーザーが何も入力しなければ、キュー内のアイテムは次の agent_loop 呼び出しまで待つ。実際の CC は `useQueueProcessor.ts` により、アイテムが到着した時に自動的に agent を起こす。ユーザー入力は不要。
+教学版は最小の queue processor を実装する。`agent_lock` で Agent がアイドルかを判定し、キューに入った cron 作業を自動配信する。実際の CC の `useQueueProcessor.ts` はさらに UI ブロック、キュープライオリティ、メッセージモードを扱う。
 
 ### CronJob: データ構造
 
@@ -135,9 +136,26 @@ def cron_scheduler_loop():
 - **ジョブ単位の try/except**：一つの悪いジョブがスケジューラスレッド全体をクラッシュさせない
 - **一回限りジョブ**：発火後、scheduled_jobs から自動削除
 
-### agent_loop: コンシューマ
+### Queue Processor + agent_loop: 配信側
 
-agent_loop は時刻をチェックしない。`cron_queue` から発火済みタスクを取り出し、messages に注入するだけ：
+queue processor は時刻をチェックしない。キューに作業があり、Agent がアイドルの時だけ一回の実行を開始する：
+
+```python
+def queue_processor_loop():
+    while True:
+        time.sleep(0.2)
+        if not has_cron_queue():
+            continue
+        if not agent_lock.acquire(blocking=False):
+            continue
+        try:
+            if has_cron_queue():
+                run_agent_turn_locked()
+        finally:
+            agent_lock.release()
+```
+
+agent_loop も時刻をチェックしない。`cron_queue` から発火済みタスクを取り出し、messages に注入するだけ：
 
 ```python
 fired = consume_cron_queue()
@@ -146,7 +164,7 @@ for job in fired:
                      "content": f"[Scheduled] {job.prompt}"})
 ```
 
-生産者（スケジューラスレッド）と消費者（agent_loop）は `cron_queue` + `cron_lock` で分離されている。
+生産者（スケジューラスレッド）、配信者（queue processor）、消費者（agent_loop）は `cron_queue`、`cron_lock`、`agent_lock` で分離されている。
 
 ### バリデーション：不正 cron がスケジューラを殺すのを防止
 
@@ -175,6 +193,7 @@ def schedule_job(cron, prompt, recurring=True, durable=True):
 1. 起動時：
    load_durable_jobs() → .scheduled_tasks.json から永続タスクを復元
    Thread(cron_scheduler_loop, daemon=True).start() → スケジューラスレッドがポーリング開始
+   Thread(queue_processor_loop, daemon=True).start() → processor が配信待機
 
 2. タスク登録：
    schedule_cron(cron="*/2 * * * *", prompt="run date", durable=True)
@@ -182,7 +201,8 @@ def schedule_job(cron, prompt, recurring=True, durable=True):
 
 3. 2 分ごと：
    スケジューラチェック → cron_matches が True → cron_queue.append(job)
-   → agent_loop が次回呼び出し時に consume_cron_queue → "[Scheduled] run date" を注入
+   → queue processor がアイドル状態を検知 → agent_loop consume_cron_queue
+   → "[Scheduled] run date" を注入
    → LLM がメッセージを受信、date コマンドを実行
 
 4. プロセス終了：
@@ -199,10 +219,10 @@ def schedule_job(cron, prompt, recurring=True, durable=True):
 |--------------|------------|------------|
 | トリガー方式 | ユーザー手動トリガー | スケジューラスレッドが自動キュー投入 |
 | 新規型 | — | CronJob データクラス (id, cron, prompt, recurring, durable) |
-| 新規関数 | — | cron_matches, validate_cron, schedule_job, cancel_job, cron_scheduler_loop |
+| 新規関数 | — | cron_matches, validate_cron, schedule_job, cancel_job, cron_scheduler_loop, queue_processor_loop |
 | 新規ストレージ | — | .scheduled_tasks.json (durable) + メモリ (session-only) |
-| スレッド | バックグラウンド実行スレッド | + スケジューラスレッド (daemon, 1s ポーリング) |
-| キュー | background_results | + cron_queue（スケジューラ書き込み、agent_loop 読み取り） |
+| スレッド | バックグラウンド実行スレッド | + スケジューラスレッド (daemon, 1s ポーリング) + queue processor スレッド |
+| キュー | background_results | + cron_queue（スケジューラ書き込み、queue processor 配信、agent_loop 消費） |
 | ツール | 8 (s12/s13) | + schedule_cron, list_crons, cancel_cron (11) |
 
 ---
@@ -221,7 +241,7 @@ python s14_cron_scheduler/code.py
 3. `Create a one-shot reminder in 1 minute to check the build status`
 4. `Cancel the recurring job and verify with list_crons`
 
-観察ポイント：スケジューラスレッドが独立して動いているか？cron タスクが正しい時刻に発火しているか？次回入力時に Agent が注入されたメッセージを受信しているか？durable ジョブが `.scheduled_tasks.json` に書き込まれているか？
+観察ポイント：スケジューラスレッドが独立して動いているか？cron タスクが正しい時刻に発火しているか？新しい prompt を入力しなくても `[queue processor]` が出て自動実行されるか？durable ジョブが `.scheduled_tasks.json` に書き込まれているか？
 
 ---
 
@@ -276,9 +296,9 @@ durable タスクはディスクに書き込み。session-only タスクは `STA
 
 発火後、`enqueuePendingNotification()` で `priority: 'later'` としてコマンドキューにエンキュー。`workload: WORKLOAD_CRON` タグ付き、API は容量が逼迫している時に cron 発信リクエストを低い QoS で処理。
 
-### 九、第 3 層：自動ウェイク
+### 九、Queue Processor：自動配信
 
-実際の CC は cron トリガーを消費するのにユーザー入力を必要としない。`useQueueProcessor.ts:48-60` はアクティブなクエリがなく、UI がブロックされておらず、キューが空でない場合に自動的に処理をトリガー。`queueProcessor.ts:52-87` がキュープライオリティに従ってコマンドを `handlePromptSubmit()` にディスパッチ。教学版はこの層を省略し、agent_loop が呼び出された時のみ消費。
+実際の CC は `useQueueProcessor.ts:48-60` により、アクティブな query がなく、UI がブロックされておらず、キューが空でない場合に自動的に処理をトリガーする。`queueProcessor.ts:52-87` がキュープライオリティに従ってコマンドを `handlePromptSubmit()` にディスパッチ。教学版は `queue_processor_loop` で核心動作を保つ：キューに作業があり Agent がアイドルなら、自動的に一回の agent_loop を開始する。
 
 </details>
 

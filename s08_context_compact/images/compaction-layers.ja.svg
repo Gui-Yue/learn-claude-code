@@ -89,11 +89,10 @@
   <text x="55" y="477" fill="#64748b" font-size="11" font-weight="600">緊急フォールバック（API が引き続き prompt_too_long を返す場合にトリガー）</text>
 
   <!-- 緊急: reactiveCompact -->
-  <rect x="80" y="492" width="600" height="46" rx="7" fill="url(#emergency)" stroke="#c2410c" stroke-width="1.5"/>
+  <rect x="80" y="492" width="600" height="62" rx="7" fill="url(#emergency)" stroke="#c2410c" stroke-width="1.5"/>
   <text x="100" y="512" fill="#9a3412" font-size="12" font-weight="600">緊急</text>
   <text x="135" y="512" fill="#9a3412" font-size="13" font-weight="700">reactiveCompact</text>
-  <text x="278" y="512" fill="#9a3412" font-size="11">API が 413 を返す → バイトレベルでトリム、最後の 5 件 + 要約を保持</text>
-  <text x="590" y="512" fill="#9a3412" font-size="10" text-anchor="end">autoCompact より積極的</text>
-  <text x="135" y="530" fill="#c2410c" font-size="9">トリガー：API が prompt_too_long または 413 エラーを返す</text>
+  <text x="135" y="528" fill="#9a3412" font-size="10">API が 413 / prompt_too_long を返す → バイト単位でトリム</text>
+  <text x="135" y="544" fill="#c2410c" font-size="9">最後の 5 件 + 要約を保持、autoCompact より積極的</text>
 
 </svg>

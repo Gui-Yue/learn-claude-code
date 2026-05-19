@@ -83,15 +83,14 @@ TOOL_HANDLERS["todo_write"] = run_todo_write
 
 ```python
 if rounds_since_todo >= 3 and messages:
-    last = messages[-1]
-    if last["role"] == "user" and isinstance(last.get("content"), list):
-        last["content"].insert(0, {
-            "type": "text",
-            "text": "<reminder>Update your todos.</reminder>",
-        })
+    messages.append({
+        "role": "user",
+        "content": "<reminder>Update your todos.</reminder>",
+    })
+    rounds_since_todo = 0
 ```
 
-Agent がタスクを受け取った後の典型的な流れ：まず `todo_write` を呼び出して全手順を列挙（全て `pending`）→ 一つの手順に取り掛かり、`in_progress` に変更 → 完了したら `completed` に変更 → 次の `pending` を見る → 続行。3 ラウンド更新なしの場合、リマインダーが TODO の更新を促す。
+Agent がタスクを受け取った後の典型的な流れ：まず `todo_write` を呼び出して全手順を列挙（全て `pending`）→ 一つの手順に取り掛かり、`in_progress` に変更 → 完了したら `completed` に変更 → 次の `pending` を見る → 続行。3 ラウンド `todo_write` がない場合、次の LLM 呼び出し前にリマインダーが追加される。
 
 **重要な洞察**：todo_write は Agent に**実行能力**を何も追加しない。追加するのは**計画能力**だ。
 
@@ -117,11 +116,11 @@ python s05_todo_write/code.py
 
 以下のプロンプトを試してみよう：
 
-1. `Refactor the file hello.py: add type hints, docstrings, and a main guard`（まず 3 手順を列挙してから実行するはず）
-2. `Create a Python package with __init__.py, utils.py, and tests/test_utils.py`
-3. `Review all Python files and fix any style issues`
+1. `Refactor s05_todo_write/example/hello.py: add type hints, docstrings, and a main guard`（まず 3 手順を列挙してから実行するはず）
+2. `Create a Python package under s05_todo_write/example/demo_pkg with __init__.py, utils.py, and tests/test_utils.py`
+3. `Review Python files under s05_todo_write/example and fix any style issues`
 
-観察のポイント：Agent はまず `todo_write` を呼び出したか？ 何手順列挙したか？ 実行中に TODO のステータスを更新し戻ったか？ 3 ラウンド更新なしで Nag リマインダーが表示されたか？
+観察のポイント：最初のツール呼び出しは `todo_write` か？ TODO は何手順列挙されたか？ 実行中にステータスが `pending` から `in_progress` / `completed` に変わったか？
 
 ---
 

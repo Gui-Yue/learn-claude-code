@@ -83,15 +83,14 @@ TOOL_HANDLERS["todo_write"] = run_todo_write
 
 ```python
 if rounds_since_todo >= 3 and messages:
-    last = messages[-1]
-    if last["role"] == "user" and isinstance(last.get("content"), list):
-        last["content"].insert(0, {
-            "type": "text",
-            "text": "<reminder>Update your todos.</reminder>",
-        })
+    messages.append({
+        "role": "user",
+        "content": "<reminder>Update your todos.</reminder>",
+    })
+    rounds_since_todo = 0
 ```
 
-Typical flow when the Agent receives a task: first call `todo_write` to list all steps (all `pending`) → pick one step, set it to `in_progress` → complete it, set to `completed` → look at the next `pending` → continue. After 3 rounds without updates, the reminder prompts the Agent to update TODO status.
+Typical flow when the Agent receives a task: first call `todo_write` to list all steps (all `pending`) → pick one step, set it to `in_progress` → complete it, set to `completed` → look at the next `pending` → continue. After 3 rounds without `todo_write`, the loop appends a reminder before the next LLM call.
 
 **Key insight**: todo_write doesn't give the Agent any additional **execution capability**. What it adds is **planning capability**.
 
@@ -117,11 +116,11 @@ python s05_todo_write/code.py
 
 Try these prompts:
 
-1. `Refactor the file hello.py: add type hints, docstrings, and a main guard` (should list 3 steps first, then execute)
-2. `Create a Python package with __init__.py, utils.py, and tests/test_utils.py`
-3. `Review all Python files and fix any style issues`
+1. `Refactor s05_todo_write/example/hello.py: add type hints, docstrings, and a main guard` (should list 3 steps first, then execute)
+2. `Create a Python package under s05_todo_write/example/demo_pkg with __init__.py, utils.py, and tests/test_utils.py`
+3. `Review Python files under s05_todo_write/example and fix any style issues`
 
-What to watch for: Did the Agent call `todo_write` first? How many steps did it list? Did it go back to update TODO status during execution? Did the nag reminder appear after 3 rounds without updates?
+What to watch for: Was the first tool call `todo_write`? How many TODO steps were listed? Did statuses move from `pending` to `in_progress` / `completed` during execution?
 
 ---
 

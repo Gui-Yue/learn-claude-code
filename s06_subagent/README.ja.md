@@ -119,9 +119,9 @@ python s06_subagent/code.py
 
 1. `Use a subtask to find what testing framework this project uses`（サブエージェントがファイルを読み、メイン Agent は結論のみ受け取る）
 2. `Delegate: read all .py files in agents/ and summarize what each one does`
-3. `Use a task to create a new module, then verify it from here`
+3. `Use a task to create s06_subagent/example/string_tools.py with a slugify(text: str) function, then verify it from the parent agent`
 
-観察のポイント：Agent はサブエージェントを spawn してファイルを読みに行くか？ サブエージェントの中間過程はメイン会話に現れるか？ 最後に返された結論に、サブエージェントが読んだファイルの内容は含まれているか？
+観察のポイント：`[Subagent spawned]` / `[Subagent done]` が表示されるか？ サブエージェントのツール呼び出しが `[sub] ...` として出力されるか？ 親 Agent はサブエージェントが返した要約だけを受け取って続行するか？
 
 ---
 

@@ -125,11 +125,11 @@ python s07_skill_loading/code.py
 
 以下のプロンプトを試してみよう：
 
-1. `What skills are available?`（SYSTEM prompt のカタログから直接回答するはず、ツール呼び出しなし）
-2. `Load the code-review skill and follow its instructions`（load_skill を呼び出すはず）
+1. `What skills are available?`
+2. `Load the code-review skill and follow its instructions`
 3. `I need to do a code review -- load the relevant skill first`
 
-観察のポイント：Agent は SYSTEM 内のカタログから利用可能なスキルを知っているか？ 具体的な仕様が必要なときに `load_skill` を積極的に呼び出すか？ system prompt にスキルの完全な内容が含まれているか？
+観察のポイント：Agent は SYSTEM 内のカタログから利用可能なスキルを知っているか？ 完全な手順が必要なときに `[HOOK] load_skill` が表示されるか？ 読み込んだスキルの説明を使って回答しているか？
 
 ---
 

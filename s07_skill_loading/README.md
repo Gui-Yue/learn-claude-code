@@ -125,11 +125,11 @@ python s07_skill_loading/code.py
 
 试试这些 prompt：
 
-1. `What skills are available?`（应该直接从 SYSTEM prompt 里的目录回答，不调工具）
-2. `Load the code-review skill and follow its instructions`（应该调 load_skill）
+1. `What skills are available?`
+2. `Load the code-review skill and follow its instructions`
 3. `I need to do a code review -- load the relevant skill first`
 
-观察重点：Agent 是否直接从 SYSTEM 里的目录知道有哪些技能？它在需要具体规范时主动调了 `load_skill` 吗？system prompt 里有没有出现 skill 的完整内容？
+观察重点：Agent 是否直接从 SYSTEM 里的目录知道有哪些技能？需要完整规范时是否出现 `[HOOK] load_skill`？加载后回答是否使用了对应 skill 的说明？
 
 ---
 

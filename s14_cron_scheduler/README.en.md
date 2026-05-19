@@ -21,7 +21,7 @@ s13 lets the agent run slow operations in the background, but every operation is
 
 ![Cron Scheduler Overview](images/cron-scheduler-overview.en.svg)
 
-Teaching code carries forward S13's simplified task system, background execution, and prompt assembly; to stay focused on the scheduler, it omits full error recovery, memory, and skill systems. Added: an independent cron scheduler thread running as a daemon, polling every second, queuing matching jobs into `cron_queue`.
+Teaching code carries forward S13's simplified task system, background execution, and prompt assembly; to stay focused on the scheduler, it omits full error recovery, memory, and skill systems. Added: an independent cron scheduler thread that polls every second, queues matching jobs into `cron_queue`, and a queue processor that delivers them when the agent is idle.
 
 Manual vs Scheduled:
 
@@ -29,22 +29,23 @@ Manual vs Scheduled:
 |---|---|---|
 | Triggered by | User input | Scheduler thread |
 | Trigger timing | Anytime | Specified by cron expression |
-| Human involvement | Yes | No (scheduler auto-enqueues) |
+| Human involvement | Yes | No (scheduler auto-enqueues, idle agent auto-delivers) |
 | Persistence | — | Durable survives restart |
 
 ---
 
 ## How It Works
 
-### Three-Layer Model
+### Four-Layer Model
 
-Cron scheduling has three layers:
+Cron scheduling has four layers:
 
 1. **Scheduler**: daemon thread, polls every second, checks if it's time
-2. **Queue**: `cron_queue`, scheduler writes, agent_loop reads
-3. **Consumer**: agent_loop consumes queue when called, injects into messages
+2. **Queue**: `cron_queue`, scheduler writes fired jobs
+3. **Queue Processor**: sees non-empty queue and idle agent, starts one agent_loop turn
+4. **Consumer**: agent_loop consumes queue and injects into messages
 
-In the teaching version, layer 3 only executes when agent_loop is called. If the user hasn't typed anything, queued items wait until the next agent_loop call. Real CC auto-wakes the agent via `useQueueProcessor.ts` when items arrive, no user input needed.
+The teaching version implements a minimal queue processor: `agent_lock` tells whether the agent is idle, and queued cron work is delivered automatically. Real CC's `useQueueProcessor.ts` also handles UI blocking, queue priority, and different message modes.
 
 ### CronJob: Data Structure
 
@@ -135,9 +136,26 @@ Key design:
 - **Per-job try/except**: one bad job doesn't crash the scheduler thread
 - **One-shot jobs**: auto-removed from scheduled_jobs after firing
 
-### agent_loop: Consumer
+### Queue Processor + agent_loop: Delivery
 
-agent_loop doesn't check time. It only takes fired tasks from `cron_queue` and injects them into messages:
+The queue processor does not check time. It only starts a turn when queued work exists and the agent is idle:
+
+```python
+def queue_processor_loop():
+    while True:
+        time.sleep(0.2)
+        if not has_cron_queue():
+            continue
+        if not agent_lock.acquire(blocking=False):
+            continue
+        try:
+            if has_cron_queue():
+                run_agent_turn_locked()
+        finally:
+            agent_lock.release()
+```
+
+agent_loop also doesn't check time. It only takes fired tasks from `cron_queue` and injects them into messages:
 
 ```python
 fired = consume_cron_queue()
@@ -146,7 +164,7 @@ for job in fired:
                      "content": f"[Scheduled] {job.prompt}"})
 ```
 
-Producer (scheduler thread) and consumer (agent_loop) are decoupled via `cron_queue` + `cron_lock`.
+Producer (scheduler thread), deliverer (queue processor), and consumer (agent_loop) are decoupled via `cron_queue`, `cron_lock`, and `agent_lock`.
 
 ### Validation: Prevent Bad Cron from Killing the Scheduler
 
@@ -175,6 +193,7 @@ Loading durable jobs from disk also skips invalid expressions, preventing a sing
 1. On startup:
    load_durable_jobs() → restore durable tasks from .scheduled_tasks.json
    Thread(cron_scheduler_loop, daemon=True).start() → scheduler begins polling
+   Thread(queue_processor_loop, daemon=True).start() → processor waits to deliver
 
 2. Register a task:
    schedule_cron(cron="*/2 * * * *", prompt="run date", durable=True)
@@ -182,7 +201,8 @@ Loading durable jobs from disk also skips invalid expressions, preventing a sing
 
 3. Every 2 minutes:
    Scheduler checks → cron_matches returns True → cron_queue.append(job)
-   → agent_loop consumes on next call → injects "[Scheduled] run date"
+   → queue processor sees idle agent → agent_loop consume_cron_queue
+   → injects "[Scheduled] run date"
    → LLM receives message, runs date command
 
 4. Process shutdown:
@@ -199,10 +219,10 @@ Loading durable jobs from disk also skips invalid expressions, preventing a sing
 |-----------|-------------|-------------|
 | Trigger method | User manual trigger | Scheduler thread auto-enqueues |
 | New types | — | CronJob dataclass (id, cron, prompt, recurring, durable) |
-| New functions | — | cron_matches, validate_cron, schedule_job, cancel_job, cron_scheduler_loop |
+| New functions | — | cron_matches, validate_cron, schedule_job, cancel_job, cron_scheduler_loop, queue_processor_loop |
 | New storage | — | .scheduled_tasks.json (durable) + memory (session-only) |
-| Threads | Background execution thread | + Scheduler thread (daemon, 1s polling) |
-| Queue | background_results | + cron_queue (scheduler writes, agent_loop reads) |
+| Threads | Background execution thread | + Scheduler thread (daemon, 1s polling) + queue processor thread |
+| Queue | background_results | + cron_queue (scheduler writes, queue processor delivers, agent_loop consumes) |
 | Tools | 8 (s12/s13) | + schedule_cron, list_crons, cancel_cron (11) |
 
 ---
@@ -221,7 +241,7 @@ Try these prompts:
 3. `Create a one-shot reminder in 1 minute to check the build status`
 4. `Cancel the recurring job and verify with list_crons`
 
-What to observe: Is the scheduler thread running independently? Do cron tasks fire at the correct time? Does the agent receive the injected message on next input? Is the durable job written to `.scheduled_tasks.json`?
+What to observe: Is the scheduler thread running independently? Do cron tasks fire at the correct time? Without a new prompt, do you see `[queue processor]` and automatic execution? Is the durable job written to `.scheduled_tasks.json`?
 
 ---
 
@@ -276,9 +296,9 @@ Recurring tasks auto-expire after 7 days (configurable, max 30 days). Fire one l
 
 After firing, enqueued via `enqueuePendingNotification()` with `priority: 'later'` into the command queue. Tagged `workload: WORKLOAD_CRON` — API serves cron-initiated requests at lower QoS when capacity is tight.
 
-### 9. Layer 3: Auto-Wake
+### 9. Queue Processor: Automatic Delivery
 
-Real CC doesn't need user input to consume cron triggers. `useQueueProcessor.ts:48-60` auto-triggers processing when no query is active, UI isn't blocked, and queue is non-empty. `queueProcessor.ts:52-87` dispatches commands to `handlePromptSubmit()` by queue priority. The teaching version omits this layer, only consuming when agent_loop is called.
+Real CC auto-triggers processing through `useQueueProcessor.ts:48-60` when no query is active, UI isn't blocked, and queue is non-empty. `queueProcessor.ts:52-87` dispatches commands to `handlePromptSubmit()` by queue priority. The teaching version keeps the core behavior with `queue_processor_loop`: when queued work exists and the agent is idle, it starts one agent_loop turn automatically.
 
 </details>
 
