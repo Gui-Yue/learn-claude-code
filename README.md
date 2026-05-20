@@ -1,5 +1,7 @@
 [English](./README.md) | [中文](./README-zh.md) | [日本語](./README-ja.md)
 
+<a href="https://trendshift.io/repositories/19746" target="_blank"><img src="https://trendshift.io/api/badge/repositories/19746" alt="shareAI-lab%2Flearn-claude-code | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+
 # Learn Claude Code -- Harness Engineering for Real Agents
 
 ## Agency Comes from the Model. An Agent Product = Model + Harness.
@@ -272,7 +274,7 @@ flowchart TD
         direction LR
         S1["<b>1. Let the Agent act</b><br/>━━━━━━━━━━━━━<br/><b>s01 Agent Loop</b><br/>└─ one loop + bash<br/><br/><b>s02 Tool Use</b><br/>└─ one tool to many tools<br/><br/><b>s03 Permission</b><br/>└─ decide what can run<br/><br/><b>s04 Hooks</b><br/>└─ extension points around tools"]:::stage1
 
-        S2["<b>2. Handle complex work</b><br/>━━━━━━━━━━━━━<br/><b>s05 TodoWrite</b><br/>└─ plan first, then execute<br/><br/><b>s06 Subagent</b><br/>└─ side work, result back<br/><br/><b>s07 Skill Loading</b><br/>└─ expand skills on demand<br/><br/><b>s08 Context Compact</b><br/>└─ make room in long context"]:::stage2
+        S2["<b>2. Handle complex work</b><br/>━━━━━━━━━━━━━<br/><b>s05 TodoWrite</b><br/>└─ plan first, then execute<br/><br/><b>s06 Subagent</b><br/>└─ side work, result back<br/><br/><b>s08 Context Compact</b><br/>└─ make room in long context"]:::stage2
 
         S3["<b>3. Remember and recover</b><br/>━━━━━━━━━━━━━<br/><b>s09 Memory</b><br/>└─ remember what matters<br/><br/><b>s10 System Prompt</b><br/>└─ assemble at runtime<br/><br/><b>s11 Error Recovery</b><br/>└─ retry or change path"]:::stage3
 
@@ -286,7 +288,7 @@ flowchart TD
 
         S5["<b>5. Coordinate many Agents</b><br/>━━━━━━━━━━━━━<br/><b>s15 Agent Teams</b><br/>└─ teammates + mailboxes<br/><br/><b>s16 Team Protocols</b><br/>└─ fixed request-reply format<br/><br/><b>s17 Autonomous Agents</b><br/>└─ claim work from the board<br/><br/><b>s18 Worktree Isolation</b><br/>└─ separate directories"]:::stage5
 
-        S6["<b>6. Extend and assemble</b><br/>━━━━━━━━━━━━━<br/><b>s19 MCP Plugin</b><br/>└─ external tools, one pool<br/><br/><b>s20 Comprehensive Agent</b><br/>└─ all mechanisms, one loop"]:::stage6
+        S6["<b>6. Extend and assemble</b><br/>━━━━━━━━━━━━━<br/><b>s07 Skill Loading</b><br/>└─ expand skills on demand<br/><br/><b>s19 MCP Plugin</b><br/>└─ external tools, one pool<br/><br/><b>s20 Comprehensive Agent</b><br/>└─ all mechanisms, one loop"]:::stage6
 
         S4 ==> S5 ==> S6
     end
@@ -321,7 +323,7 @@ flowchart TD
 | [s16](./s16_team_protocols/) | Team Protocols | shutdown handshake / plan approval |
 | [s17](./s17_autonomous_agents/) | Autonomous Agents | idle cycle / auto-claim / self-organization |
 | [s18](./s18_worktree_isolation/) | Worktree Isolation | `WorktreeRecord` / task-directory binding |
-| [s19](./s19_mcp_plugin/) | MCP Plugin | multi-transport / channel routing / tool pool merge |
+| [s19](./s19_mcp_plugin/) | MCP Plugin | multi-transport / channel routing / tool pool assembly |
 | [s20](./s20_comprehensive/) | Comprehensive Agent | all mechanisms around one loop |
 
 ---

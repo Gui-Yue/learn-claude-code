@@ -328,7 +328,7 @@ flowchart TD
         direction LR
         S1["<b>第1段階：Agent が動ける</b><br/>━━━━━━━━━━━━━<br/><b>s01 Agent Loop</b><br/>└─ 1つのループ + bash<br/><br/><b>s02 Tool Use</b><br/>└─ 1つのツールから複数へ<br/><br/><b>s03 Permission</b><br/>└─ 実行してよいか判断する<br/><br/><b>s04 Hooks</b><br/>└─ ツール前後に拡張入口を作る"]:::stage1
 
-        S2["<b>第2段階：複雑な仕事をこなす</b><br/>━━━━━━━━━━━━━<br/><b>s05 TodoWrite</b><br/>└─ 先に計画し、それから実行<br/><br/><b>s06 Subagent</b><br/>└─ サブ Agent が結果を返す<br/><br/><b>s07 Skill Loading</b><br/>└─ スキルを必要時に展開<br/><br/><b>s08 Context Compact</b><br/>└─ 長いコンテキストに空きを作る"]:::stage2
+        S2["<b>第2段階：複雑な仕事をこなす</b><br/>━━━━━━━━━━━━━<br/><b>s05 TodoWrite</b><br/>└─ 先に計画し、それから実行<br/><br/><b>s06 Subagent</b><br/>└─ サブ Agent が結果を返す<br/><br/><b>s08 Context Compact</b><br/>└─ 長いコンテキストに空きを作る"]:::stage2
 
         S3["<b>第3段階：記憶して回復する</b><br/>━━━━━━━━━━━━━<br/><b>s09 Memory</b><br/>└─ 覚えるべきことを覚える<br/><br/><b>s10 System Prompt</b><br/>└─ 実行時に組み立てる<br/><br/><b>s11 Error Recovery</b><br/>└─ 再試行し、別の道へ"]:::stage3
 
@@ -342,7 +342,7 @@ flowchart TD
 
         S5["<b>第5段階：複数 Agent の協作</b><br/>━━━━━━━━━━━━━<br/><b>s15 Agent Teams</b><br/>└─ チームメイト + メールボックス<br/><br/><b>s16 Team Protocols</b><br/>└─ 固定のリクエスト-返信形式<br/><br/><b>s17 Autonomous Agents</b><br/>└─ ボードを見て仕事を取る<br/><br/><b>s18 Worktree Isolation</b><br/>└─ 別ディレクトリで作業"]:::stage5
 
-        S6["<b>第6段階：外部能力と統合</b><br/>━━━━━━━━━━━━━<br/><b>s19 MCP Plugin</b><br/>└─ 外部ツールを同じプールへ<br/><br/><b>s20 Comprehensive Agent</b><br/>└─ すべてを1つのループへ"]:::stage6
+        S6["<b>第6段階：外部能力と統合</b><br/>━━━━━━━━━━━━━<br/><b>s07 Skill Loading</b><br/>└─ スキルを必要時に展開<br/><br/><b>s19 MCP Plugin</b><br/>└─ 外部ツールを同じプールへ<br/><br/><b>s20 Comprehensive Agent</b><br/>└─ すべてを1つのループへ"]:::stage6
 
         S4 ==> S5 ==> S6
     end
@@ -375,7 +375,7 @@ flowchart TD
 | [s16](./s16_team_protocols/) | Team Protocols | シャットダウンハンドシェイク / プラン承認 |
 | [s17](./s17_autonomous_agents/) | Autonomous Agents | アイドルサイクル / 自動クレーム |
 | [s18](./s18_worktree_isolation/) | Worktree Isolation | `WorktreeRecord` / タスク-ディレクトリ紐付け |
-| [s19](./s19_mcp_plugin/) | MCP Plugin | マルチトランスポート / チャネルルーティング / ツールプール統合 |
+| [s19](./s19_mcp_plugin/) | MCP Plugin | マルチトランスポート / チャネルルーティング / ツールプール組み立て |
 | [s20](./s20_comprehensive/) | Comprehensive Agent | すべての仕組みを 1 つのループへ |
 
 ## プロジェクト構成

@@ -67,7 +67,7 @@ The loop is still the same structure: call the model, check whether the response
 | Before LLM | memory / skills / MCP state | Assemble the system prompt so the model sees current capabilities and long-term context |
 | LLM call | error recovery | Retry 429/529, escalate `max_tokens`, compact on prompt-too-long |
 | Before tool execution | `PreToolUse` hooks + permission | Block dangerous commands, out-of-bounds writes, destructive MCP tools |
-| Tool dispatch | `assemble_tool_pool` | Merge built-in tools and dynamic MCP tools |
+| Tool dispatch | `assemble_tool_pool` | Assemble built-in tools and dynamic MCP tools |
 | During tool execution | background dispatch | Move slow bash work into a daemon thread and return a placeholder result |
 | After tool execution | `PostToolUse` hooks | Large-output warnings, logs, post-processing |
 | Back to loop | tool_result | One `tool_result` per `tool_use`, then the next model round |
@@ -92,7 +92,7 @@ create_worktree, remove_worktree, keep_worktree
 connect_mcp
 ```
 
-`assemble_tool_pool()` merges these every round:
+`assemble_tool_pool()` assembles these every round:
 
 ```text
 BUILTIN_TOOLS + connected MCP tools
@@ -181,7 +181,7 @@ Worktree isolation owns directories:
 MCP owns external capability:
 
 - `connect_mcp(name)` connects a mock server
-- `assemble_tool_pool()` merges MCP tools into the tool pool
+- `assemble_tool_pool()` assembles MCP tools into the tool pool
 - tool names use `mcp__server__tool`
 
 ---
@@ -232,7 +232,7 @@ Watch for:
 
 ---
 
-## You Finished the Path
+## The End Is the Beginning
 
 From s01 to s20, the code gets more capable, but the core remains unchanged:
 

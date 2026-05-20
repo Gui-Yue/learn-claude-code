@@ -7,8 +7,8 @@ Need: pip install anthropic python-dotenv + .env with ANTHROPIC_API_KEY
 
 Changes from s18:
   - MCPClient class: discovers tools, calls tools via mock handler
-  - normalize_mcp_name: sanitize tool/server names
-  - assemble_tool_pool: merges builtin + MCP tools into one pool
+  - normalize_mcp_name: normalize tool/server names
+  - assemble_tool_pool: assembles builtin + MCP tools into one pool
   - connect_mcp: connect to an MCP server, discover tools
   - Tool naming: mcp__{server}__{tool} with normalization
   - MCP tools have readOnly/destructive annotations
@@ -18,7 +18,7 @@ Changes from s18:
 ASCII flow:
   connect_mcp("docs") → MCPClient discovers tools →
   assemble_tool_pool → [builtin... , mcp__docs__search, mcp__docs__get_version]
-  agent_loop uses merged pool
+  agent_loop uses assembled pool
 """
 
 import os, subprocess, json, time, random, threading, re
@@ -752,7 +752,7 @@ def connect_mcp(name: str) -> str:
 
 
 def assemble_tool_pool() -> tuple[list[dict], dict]:
-    """Merge builtin tools + all MCP tools into one pool."""
+    """Assemble builtin tools + all MCP tools into one pool."""
     tools = list(BUILTIN_TOOLS)
     handlers = dict(BUILTIN_HANDLERS)
     for server_name, mcp_client in mcp_clients.items():

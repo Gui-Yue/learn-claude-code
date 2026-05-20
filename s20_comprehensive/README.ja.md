@@ -67,7 +67,7 @@ loop 自体は同じ構造のままだ。model を呼び、response に `tool_us
 | LLM 前 | memory / skills / MCP state | current capabilities と long-term context を system prompt に組み込む |
 | LLM call | error recovery | 429/529 retry、`max_tokens` escalation、prompt-too-long compact |
 | tool 実行前 | `PreToolUse` hooks + permission | 危険な command、範囲外 write、destructive MCP tool を止める |
-| tool dispatch | `assemble_tool_pool` | built-in tools と dynamic MCP tools を統合 |
+| tool dispatch | `assemble_tool_pool` | built-in tools と dynamic MCP tools を組み立てる |
 | tool 実行中 | background dispatch | 遅い bash work を daemon thread に逃がし、placeholder result を返す |
 | tool 実行後 | `PostToolUse` hooks | large-output warning、log、後処理 |
 | loop へ戻る | tool_result | 1 つの `tool_use` に 1 つの `tool_result`、そして次の model round |
@@ -92,7 +92,7 @@ create_worktree, remove_worktree, keep_worktree
 connect_mcp
 ```
 
-`assemble_tool_pool()` は毎 round で次を統合する：
+`assemble_tool_pool()` は毎 round で次を組み立てる：
 
 ```text
 BUILTIN_TOOLS + connected MCP tools
@@ -181,7 +181,7 @@ worktree isolation は directory を担当する：
 MCP は external capability を担当する：
 
 - `connect_mcp(name)` が mock server に接続する
-- `assemble_tool_pool()` が MCP tools を tool pool に統合する
+- `assemble_tool_pool()` が MCP tools を tool pool に組み立てる
 - tool name は `mcp__server__tool` 形式に統一する
 
 ---
@@ -232,7 +232,7 @@ python s20_comprehensive/code.py
 
 ---
 
-## 最後まで来た
+## 終わりは始まり
 
 s01 から s20 まで、コードの能力は増えていく。しかし中心は変わらない：
 

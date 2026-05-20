@@ -4,7 +4,7 @@
 
 s01 → ... → s17 → s18 → `s19` → [s20](../s20_comprehensive/)
 
-> *"External tools, standard protocol"* — Discover, merge, invoke. Agent doesn't need to know who wrote them.
+> *"External tools, standard protocol"* — Discover, assemble, invoke. Agent doesn't need to know who wrote them.
 >
 > **Harness layer**: Plugins — External capabilities via a standard protocol.
 
@@ -30,10 +30,10 @@ MCP (Model Context Protocol) defines how agents discover and invoke external too
 |------|------|
 | MCPClient | The agent-side client — connects to servers, discovers tools, invokes tools |
 | MCP Server | The external service — implements `tools/list` + `tools/call` |
-| assemble_tool_pool | Merges built-in tools and MCP tools into a single pool |
+| assemble_tool_pool | Assembles built-in tools and MCP tools into one tool pool |
 | mcp\_\_server\_\_tool naming | Prevents tool name collisions across different servers |
 
-Carries forward s18's teaching-version worktree isolation, autonomous claiming, idle polling, and protocol system. This chapter adds: the `connect_mcp` tool — connect to external services, discover tools, merge into the tool pool.
+Carries forward s18's teaching-version worktree isolation, autonomous claiming, idle polling, and protocol system. This chapter adds: the `connect_mcp` tool — connect to external services, discover tools, add them to the tool pool.
 
 The tutorial uses mock handlers to simulate external servers. The real version would spawn subprocesses and communicate via stdin/stdout JSON-RPC. Mocks let you run the full flow without external dependencies; the tradeoff is you don't see real network communication or process management.
 
@@ -81,7 +81,7 @@ def connect_mcp(name: str) -> str:
 
 After connecting, the server's tools are immediately available.
 
-### normalize_mcp_name: Name Sanitization
+### normalize_mcp_name: Name Normalization
 
 ```python
 _DISALLOWED_CHARS = re.compile(r'[^a-zA-Z0-9_-]')
@@ -92,7 +92,7 @@ def normalize_mcp_name(name: str) -> str:
 
 All non-`[a-zA-Z0-9_-]` characters are replaced with `_`. Prevents special characters in server or tool names from causing naming conflicts or injection issues.
 
-### assemble_tool_pool: Merge
+### assemble_tool_pool: Assemble Tool Pool
 
 ```python
 def assemble_tool_pool() -> tuple[list[dict], dict]:
@@ -110,7 +110,7 @@ def assemble_tool_pool() -> tuple[list[dict], dict]:
     return tools, handlers
 ```
 
-The prefix `mcp__{server}__{tool}` prevents tool name collisions across different servers. Names are sanitized through `normalize_mcp_name`.
+The prefix `mcp__{server}__{tool}` prevents tool name collisions across different servers. Names are normalized through `normalize_mcp_name`.
 
 MCP tool descriptions include `(readOnly)` or `(destructive)` annotations — the tutorial uses text annotations, while real CC uses structured tool annotations for the permission system.
 
@@ -143,8 +143,8 @@ This is a teaching simplification. In real CC, MCP tools are available to both t
 | Component | Before (s18) | After (s19) |
 |------|-----------|-----------|
 | Tool source | All hand-written built-in | Hand-written + MCP external tools with dynamic discovery |
-| Tool pool | Fixed BUILTIN_TOOLS | assemble_tool_pool dynamically merges mcp\_\_ prefixed tools |
-| Name safety | None | normalize_mcp_name sanitization |
+| Tool pool | Fixed BUILTIN_TOOLS | assemble_tool_pool dynamically assembles mcp\_\_ prefixed tools |
+| Name safety | None | normalize_mcp_name normalization |
 | New type | — | MCPClient class (simulates tools/list + tools/call) |
 | Namespace | — | mcp\_\_server\_\_tool prevents collisions |
 | Tool descriptions | No annotations | (readOnly)/(destructive) annotations |

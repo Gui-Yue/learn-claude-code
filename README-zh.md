@@ -328,7 +328,7 @@ flowchart TD
         direction LR
         S1["<b>第一阶段：让 Agent 能动手</b><br/>━━━━━━━━━━━━━<br/><b>s01 Agent Loop</b><br/>└─ 一个循环 + bash<br/><br/><b>s02 Tool Use</b><br/>└─ 单个到多个工具<br/><br/><b>s03 Permission</b><br/>└─ 判断能不能做<br/><br/><b>s04 Hooks</b><br/>└─ 工具前后留扩展插口"]:::stage1
 
-        S2["<b>第二阶段：做复杂任务</b><br/>━━━━━━━━━━━━━<br/><b>s05 TodoWrite</b><br/>└─ 先列计划，再执行<br/><br/><b>s06 Subagent</b><br/>└─ 子节点干活带回结果<br/><br/><b>s07 Skill Loading</b><br/>└─ 技能按需展开<br/><br/><b>s08 Context Compact</b><br/>└─ 长下文腾空间"]:::stage2
+        S2["<b>第二阶段：做复杂任务</b><br/>━━━━━━━━━━━━━<br/><b>s05 TodoWrite</b><br/>└─ 先列计划，再执行<br/><br/><b>s06 Subagent</b><br/>└─ 子节点干活带回结果<br/><br/><b>s08 Context Compact</b><br/>└─ 长下文腾空间"]:::stage2
 
         S3["<b>第三阶段：记住和恢复</b><br/>━━━━━━━━━━━━━<br/><b>s09 Memory</b><br/>└─ 该记记，该忘忘<br/><br/><b>s10 System Prompt</b><br/>└─ 运行时组装<br/><br/><b>s11 Error Recovery</b><br/>└─ 重试换路子"]:::stage3
 
@@ -342,7 +342,7 @@ flowchart TD
 
         S5["<b>第五阶段：让多个 Agent 协作</b><br/>━━━━━━━━━━━━━<br/><b>s15 Agent Teams</b><br/>└─ 队友 + 邮箱通信<br/><br/><b>s16 Team Protocols</b><br/>└─ 固定收发格式<br/><br/><b>s17 Autonomous Agents</b><br/>└─ 自己看板认领活<br/><br/><b>s18 Worktree Isolation</b><br/>└─ 隔离目录"]:::stage5
 
-        S6["<b>第六阶段：接外部能力合体</b><br/>━━━━━━━━━━━━━<br/><b>s19 MCP Plugin</b><br/>└─ 外部接进工具池<br/><br/><b>s20 Comprehensive Agent</b><br/>└─ 全机制回单循环"]:::stage6
+        S6["<b>第六阶段：接外部能力合体</b><br/>━━━━━━━━━━━━━<br/><b>s07 Skill Loading</b><br/>└─ 技能按需展开<br/><br/><b>s19 MCP Plugin</b><br/>└─ 外部接进工具池<br/><br/><b>s20 Comprehensive Agent</b><br/>└─ 全机制回单循环"]:::stage6
 
         S4 ==> S5 ==> S6
     end
@@ -376,7 +376,7 @@ flowchart TD
 | [s16](./s16_team_protocols/) | Team Protocols | 关机握手 / 计划审批 |
 | [s17](./s17_autonomous_agents/) | Autonomous Agents | 空闲循环 / 自动认领 |
 | [s18](./s18_worktree_isolation/) | Worktree Isolation | `WorktreeRecord` / 任务-目录绑定 |
-| [s19](./s19_mcp_plugin/) | MCP Plugin | 多传输 / 通道路由 / 工具池合并 |
+| [s19](./s19_mcp_plugin/) | MCP Plugin | 多传输 / 通道路由 / 工具池组装 |
 | [s20](./s20_comprehensive/) | Comprehensive Agent | 全部机制归到一个循环 |
 
 ## 项目结构
