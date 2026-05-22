@@ -4,7 +4,7 @@
 
 # Learn Claude Code -- Harness Engineering for Real Agents
 
-## Agency Comes from the Model. An Agent Product = Model + Harness.
+## Agency Comes from the Model. An Agent = Model (LLM) + a Generalized Operational Environment (Harness).
 
 Before we write any code, one thing needs to be clear.
 

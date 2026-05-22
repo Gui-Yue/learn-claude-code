@@ -2,7 +2,7 @@
 
 [English](./README.md) | [中文](./README-zh.md) | [日本語](./README-ja.md)
 
-## Agency はモデルから生まれる。Agent プロダクト = モデル + Harness
+## Agency はモデルから生まれる。Agent = モデル（LLM）+ 汎用化されたオペレーション環境（Harness）
 
 コードの話をする前に、一つ明確にしておく。
 
